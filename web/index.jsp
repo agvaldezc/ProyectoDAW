@@ -8,10 +8,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <jsp:include page="imports/libraries.html"></jsp:include>
+        <title>Index</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="container">
+            <jsp:include page="imports/header.html"></jsp:include>
+            <div class="col-md-6">
+                <h1>Acceder al sistema como alumno</h1>
+                <form method="post" action="AuthenticationController?role=alumno" role="form">
+                    <div class="form-group">
+                        <label for="username">Usuario: </label>
+                        <input type="text" name="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña: </label>
+                        <input type="text" name="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h1>Acceder al sistema como administrador</h1>
+                <form method="post" action="AuthenticationController?role=admin" role="form">
+                    <div class="form-group">
+                        <label for="username">Usuario: </label>
+                        <input type="text" name="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña: </label>
+                        <input type="text" name="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

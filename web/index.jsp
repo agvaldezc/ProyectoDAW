@@ -30,7 +30,7 @@
             </div>
             <div class="col-md-6">
                 <h1>Acceder al sistema como administrador</h1>
-                <form method="post" action="AuthenticationController?role=admin" role="form">
+                <form method="post" action="AuthenticationController?role=maestro" role="form">
                     <div class="form-group">
                         <label for="username">Usuario: </label>
                         <input type="text" name="username" class="form-control">

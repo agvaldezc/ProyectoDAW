@@ -5,6 +5,8 @@
  */
 package controllers;
 
+import instancias.Alumno;
+import instancias.Maestro;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -14,10 +16,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,6 +43,10 @@ public class AuthenticationController extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        
+        String error = "";
+        String url = "/index.jsp";
         
         String role = request.getParameter("role");
         String username = request.getParameter("username");
@@ -45,8 +54,8 @@ public class AuthenticationController extends HttpServlet {
         
         if (role.equals("maestro") && username != null && password != null) {
             
-            String url = "jdbc:mysql://localhost:3306/ProyectoDAW";
-            Connection connection = DriverManager.getConnection(url, "root", "root");
+            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
             
             String queryString = "Select * from Maestros where nomina = ? and password = ?";
             
@@ -58,15 +67,26 @@ public class AuthenticationController extends HttpServlet {
             ResultSet result = pstmt.executeQuery();
             
             if (result.next()) {
-                System.out.println("maestro validado");
+                
+                Maestro maestro = new Maestro(result.getString("nomina"), 
+                        result.getString("password"), result.getString("nombre"), result.getString("telefono"), 
+                        result.getString("mail"), result.getInt("cursosImpartidos"));
+                
+            session.setAttribute("maestro", maestro);
+            request.setAttribute("error", error);
+            session.setAttribute("role", role);
+            
+            url = "/WEB-INF/menu.jsp";
+                
             } else {
-                System.out.println("maestro no existe");
+                error = "Usuario y/o contraseña inválido";
+                request.setAttribute("error", error);
             }
  
         } else if (role.equals("alumno") && username != null && password != null) {
             
-            String url = "jdbc:mysql://localhost:3306/ProyectoDAW";
-            Connection connection = DriverManager.getConnection(url, "root", "root");
+            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
             
             String queryString = "Select * from Alumnos where matricula = ? and password = ?";
             
@@ -78,11 +98,26 @@ public class AuthenticationController extends HttpServlet {
             ResultSet result = pstmt.executeQuery();
             
             if (result.next()) {
-                System.out.println("alumno validado");
+                 
+                Alumno alumno = new Alumno(result.getString("matricula"), 
+                        result.getString("password"), result.getString("nombre"), result.getString("telefono"), 
+                        result.getString("mail"));
+                
+            session.setAttribute("alumno", alumno);
+            request.setAttribute("error", error);
+            session.setAttribute("role", role);
+            
+            url = "/WEB-INF/menu.jsp";
+                
             } else {
-                System.out.println("alumno no existe");
+                error = "Usuario y/o contraseña inválido";
+                request.setAttribute("error", error);
             }
         }
+        
+        ServletContext context = request.getServletContext();
+        RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

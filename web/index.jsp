@@ -4,6 +4,14 @@
     Author     : agvaldezc
 --%>
 
+
+<% 
+    String error = (String) request.getAttribute("error");
+    
+    if (error == null) {
+        error = "";
+    }
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,8 +20,15 @@
         <title>Index</title>
     </head>
     <body>
+        <jsp:include page="imports/header.jsp"></jsp:include>
         <div class="container">
-            <jsp:include page="imports/header.html"></jsp:include>
+            <%
+                if (error != "") {
+                    out.println("<div class='alert alert-danger'>");
+                        out.println("<strong>" + error + "</strong>");
+                    out.println("</div>");
+                }
+            %>
             <div class="col-md-6">
                 <h1>Acceder al sistema como alumno</h1>
                 <form method="post" action="AuthenticationController?role=alumno" role="form">
@@ -23,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Contraseña: </label>
-                        <input type="text" name="password" class="form-control">
+                        <input type="password" name="password" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -37,7 +52,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Contraseña: </label>
-                        <input type="text" name="password" class="form-control">
+                        <input type="password" name="password" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>

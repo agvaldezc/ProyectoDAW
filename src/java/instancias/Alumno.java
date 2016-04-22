@@ -9,30 +9,28 @@ package instancias;
  *
  * @author agvaldezc
  */
-public class Maestro {
+public class Alumno {
     
-    private String nomina;
+    private String matricula;
     private String password;
     private String nombre;
     private String telefono;
     private String email;
-    private int cursosImpartidos;
 
-    public Maestro(String nomina, String password, String nombre, String telefono, String email, int cursosImpartidos) {
-        this.nomina = nomina;
+    public Alumno(String matricula, String password, String nombre, String telefono, String email) {
+        this.matricula = matricula;
         this.password = password;
         this.nombre = nombre;
         this.telefono = telefono;
         this.email = email;
-        this.cursosImpartidos = cursosImpartidos;
     }
 
-    public String getNomina() {
-        return nomina;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public void setNomina(String nomina) {
-        this.nomina = nomina;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     public String getPassword() {
@@ -65,13 +63,5 @@ public class Maestro {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getCursosImpartidos() {
-        return cursosImpartidos;
-    }
-
-    public void setCursosImpartidos(int cursosImpartidos) {
-        this.cursosImpartidos = cursosImpartidos;
     }
 }

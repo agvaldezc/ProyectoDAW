@@ -3,11 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/src/java/instancias/Alumno.java</file>
+            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/src/java/instancias/Horario.java</file>
             <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/web/index.jsp</file>
+            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/web/imports/header.jsp</file>
+            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/src/java/instancias/Salon.java</file>
             <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/src/java/controllers/AuthenticationController.java</file>
-            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/web/imports/header.html</file>
-            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/web/imports/libraries.html</file>
-            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/web/bootstrap/js/npm.js</file>
+            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/src/java/instancias/Materia.java</file>
+            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/web/WEB-INF/menu.jsp</file>
+            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/src/java/instancias/Curso.java</file>
+            <file>file:/Users/agvaldezc/NetBeansProjects/ProyectoFinal/src/java/instancias/Maestro.java</file>
         </group>
     </open-files>
 </project-private>

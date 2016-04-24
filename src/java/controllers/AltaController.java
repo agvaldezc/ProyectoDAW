@@ -90,7 +90,7 @@ public class AltaController extends HttpServlet {
             nombre = request.getParameter("nombre");
             telefono = request.getParameter("telefono");
             mail = request.getParameter("mail");
-            if(request.getParameter("cursos") != null)
+            if(!request.getParameter("cursos").equals(null))
                 cursos = Integer.parseInt(request.getParameter("cursos"));
 
             if (nomina != "" && password != "" && nombre != "" && telefono != "" && mail != "") {
@@ -108,6 +108,35 @@ public class AltaController extends HttpServlet {
                 pstmt.setString(4, telefono);
                 pstmt.setString(5, mail);
                 pstmt.setString(6, String.valueOf(cursos));
+
+                pstmt.execute();
+
+                connection.close();
+
+            } else {
+                error = "Datos incorrectos";
+                request.setAttribute("error", error);
+                url = "/alta.jsp";
+            }
+        }
+        
+        if (alta.equals("materia")) {
+            String clave = "";
+            String nombre = "";
+            clave = request.getParameter("clave");
+            nombre = request.getParameter("nombre");
+
+            if (clave != "" && nombre != "") {
+
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+
+                String queryString = "INSERT INTO Materias (clave, nombre) VALUES (?, ?)";
+
+                PreparedStatement pstmt = connection.prepareStatement(queryString);
+
+                pstmt.setString(1, clave);
+                pstmt.setString(2, nombre);
 
                 pstmt.execute();
 

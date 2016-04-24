@@ -8,6 +8,10 @@
         <servlet-name>AltaController</servlet-name>
         <servlet-class>controllers.AltaController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BajaController</servlet-name>
+        <servlet-class>controllers.BajaController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationController</servlet-name>
         <url-pattern>/AuthenticationController</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>AltaController</servlet-name>
         <url-pattern>/AltaController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BajaController</servlet-name>
+        <url-pattern>/BajaController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

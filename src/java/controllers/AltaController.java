@@ -47,14 +47,14 @@ public class AltaController extends HttpServlet {
         String alta = request.getParameter("alta");
 
         if (alta.equals("salon")) {
-            String capacidad = "";
+            int capacidad = 0;
             String administracion = "";
             String id = "";
             id = request.getParameter("numero");
-            capacidad = request.getParameter("capacidad");
+            capacidad = Integer.parseInt(request.getParameter("capacidad"));
             administracion = request.getParameter("administracion");
 
-            if (id != "" && capacidad != "" && administracion != "") {
+            if (id != "" && capacidad !=0 && administracion != "") {
 
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
@@ -64,7 +64,7 @@ public class AltaController extends HttpServlet {
                 PreparedStatement pstmt = connection.prepareStatement(queryString);
 
                 pstmt.setString(1, id);
-                pstmt.setString(2, capacidad);
+                pstmt.setInt(2, capacidad);
                 pstmt.setString(3, administracion);
 
                 pstmt.execute();
@@ -107,7 +107,7 @@ public class AltaController extends HttpServlet {
                 pstmt.setString(3, nombre);
                 pstmt.setString(4, telefono);
                 pstmt.setString(5, mail);
-                pstmt.setString(6, String.valueOf(cursos));
+                pstmt.setInt(6, cursos);
 
                 pstmt.execute();
 

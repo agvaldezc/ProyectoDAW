@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+
 /**
  *
  * @author Gonzalez
@@ -39,46 +40,86 @@ public class AltaController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         //HttpSession session = request.getSession();
-        
+
         String error = "";
-        String url = "/menu.jsp";
-        
+        String url = "/WEB-INF/menu.jsp";
+
         String alta = request.getParameter("alta");
-        String capacidad = "";
-        String administracion = "";
-        String id = "";
-        
+
         if (alta.equals("salon")) {
+            String capacidad = "";
+            String administracion = "";
+            String id = "";
             id = request.getParameter("numero");
             capacidad = request.getParameter("capacidad");
             administracion = request.getParameter("administracion");
-        }
-        
-        if (alta.equals("salon") && id != "" && capacidad != "" && administracion != "") {
-            
-            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
-            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
-            
-            String queryString = "INSERT INTO Salones (id, capacidad, administracion) VALUES (?, ?, ?)";
-            
-            PreparedStatement pstmt = connection.prepareStatement(queryString);
-            
-            pstmt.setString(1, id);
-            pstmt.setString(2, capacidad);
-            pstmt.setString(3, administracion);
-            
-            pstmt.execute();
-            
-            connection.close();
-            
+
+            if (id != "" && capacidad != "" && administracion != "") {
+
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+
+                String queryString = "INSERT INTO Salones (id, capacidad, administracion) VALUES (?, ?, ?)";
+
+                PreparedStatement pstmt = connection.prepareStatement(queryString);
+
+                pstmt.setString(1, id);
+                pstmt.setString(2, capacidad);
+                pstmt.setString(3, administracion);
+
+                pstmt.execute();
+
+                connection.close();
+
             } else {
                 error = "Datos incorrectos";
                 request.setAttribute("error", error);
                 url = "/alta.jsp";
             }
- 
-        
-        
+        }
+
+        if (alta.equals("maestro")) {
+            String nomina = "";
+            String password = "";
+            String nombre = "";
+            String telefono = "";
+            String mail = "";
+            int cursos = 0;
+            nomina = request.getParameter("nomina");
+            password = request.getParameter("password");
+            nombre = request.getParameter("nombre");
+            telefono = request.getParameter("telefono");
+            mail = request.getParameter("mail");
+            if(request.getParameter("cursos") != null)
+                cursos = Integer.parseInt(request.getParameter("cursos"));
+
+            if (nomina != "" && password != "" && nombre != "" && telefono != "" && mail != "") {
+
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+
+                String queryString = "INSERT INTO Maestros (nomina, password, nombre, telefono, mail, cursosImpartidos) VALUES (?, ?, ?, ?, ?, ?)";
+
+                PreparedStatement pstmt = connection.prepareStatement(queryString);
+
+                pstmt.setString(1, nombre);
+                pstmt.setString(2, password);
+                pstmt.setString(3, nombre);
+                pstmt.setString(4, telefono);
+                pstmt.setString(5, mail);
+                pstmt.setString(6, String.valueOf(cursos));
+
+                pstmt.execute();
+
+                connection.close();
+
+            } else {
+                error = "Datos incorrectos";
+                request.setAttribute("error", error);
+                url = "/alta.jsp";
+            }
+        }
+
         ServletContext context = request.getServletContext();
         RequestDispatcher dispatcher = context.getRequestDispatcher(url);
         dispatcher.forward(request, response);

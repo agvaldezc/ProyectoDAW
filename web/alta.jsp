@@ -100,5 +100,29 @@
             </form>
         </div>
         <%}%>
+        
+        <%if (alta.equals("materia")) {%>
+        <div class="col-md-6">
+            <%
+                if (error != "") {
+                    out.println("<div class='alert alert-danger'>");
+                    out.println("<strong>" + error + "</strong>");
+                    out.println("</div>");
+                }
+            %>
+            <h1>Alta Materia</h1>
+            <form method="post" action="AltaController?alta=materia" role="form">
+                <div class="form-group">
+                    <label for="clave">Clave: </label>
+                    <input type="text" id="salonNum" name="clave" class="form-control" onkeyup="validar(this.value, this.id)" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" id="salonCap" name="nombre" class="form-control" onkeyup="validar(this.value, this.id)" required>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+        <%}%>
     </body>
 </html>

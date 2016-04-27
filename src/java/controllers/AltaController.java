@@ -102,7 +102,7 @@ public class AltaController extends HttpServlet {
 
                 PreparedStatement pstmt = connection.prepareStatement(queryString);
 
-                pstmt.setString(1, nombre);
+                pstmt.setString(1, nomina);
                 pstmt.setString(2, password);
                 pstmt.setString(3, nombre);
                 pstmt.setString(4, telefono);

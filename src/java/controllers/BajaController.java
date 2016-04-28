@@ -43,7 +43,7 @@ public class BajaController extends HttpServlet {
 
         if (baja.equals("maestro")) {
             try {
-                String nomina = request.getParameter("nomina");
+                String nomina = request.getParameter("id");
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
                 String query = "DELETE FROM Maestros WHERE nomina = ?";
@@ -59,7 +59,7 @@ public class BajaController extends HttpServlet {
         
         if (baja.equals("materia")) {
             try {
-                String clave = request.getParameter("clave");
+                String clave = request.getParameter("id");
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
                 String query = "DELETE FROM Materias WHERE clave = ?";
@@ -73,14 +73,30 @@ public class BajaController extends HttpServlet {
             }
         }
         
-        if (baja.equals("alumno")) {
+        if (baja.equals("materia")) {
             try {
-                String matricula = request.getParameter("matricula");
+                String clave = request.getParameter("id");
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
-                String query = "DELETE FROM Alumnos WHERE matricula = ?";
+                String query = "DELETE FROM Materias WHERE clave = ?";
                 PreparedStatement pstmt = connection.prepareStatement(query);
-                pstmt.setString(1, matricula);
+                pstmt.setString(1, clave);
+                pstmt.execute();
+                connection.close();
+            } catch (Exception e) {
+                System.err.println("Got an exception! ");
+                System.err.println(e.getMessage());
+            }
+        }
+        
+        if (baja.equals("salon")) {
+            try {
+                String id = request.getParameter("id");
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                String query = "DELETE FROM Salones WHERE id = ?";
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, id);
                 pstmt.execute();
                 connection.close();
             } catch (Exception e) {
@@ -105,9 +121,10 @@ public class BajaController extends HttpServlet {
             }
         }
         
-        ServletContext context = request.getServletContext();
-        RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+        
+        //ServletContext context = request.getServletContext();
+        //RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+        //dispatcher.forward(request, response);
 
     }
 

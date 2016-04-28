@@ -31,11 +31,13 @@
         </head>
         <body>
         <jsp:include page="imports/header.jsp"></jsp:include>
+        <div class="container">
+
         <%
             String alta = request.getParameter("alta");
         %>
         <%if (alta.equals("salon")) {%>
-        <div class="col-md-6">
+            <div class="col-md-12">
             <%
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
@@ -63,7 +65,7 @@
         <%}%>
 
         <%if (alta.equals("maestro")) {%>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <%
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
@@ -103,7 +105,7 @@
         <%}%>
 
         <%if (alta.equals("materia")) {%>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <%
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
@@ -127,7 +129,7 @@
         <%}%>
 
         <%if (alta.equals("alumno")) {%>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <%
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
@@ -163,7 +165,7 @@
         <%}%>
 
         <%if (alta.equals("curso")) {%>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <%
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
@@ -231,8 +233,9 @@
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
         </div>
+        </div>
+        
         <%}%>
-
 
     </body>
 </html>

@@ -5,11 +5,21 @@
 --%>
 
 
+<%@page import="instancias.Alumno"%>
+<%@page import="instancias.Maestro"%>
 <% 
     String error = (String) request.getAttribute("error");
+    Maestro maestro = (Maestro) request.getSession().getAttribute("maestro");
+    Alumno alumno = (Alumno) request.getSession().getAttribute("alumno");
     
     if (error == null) {
         error = "";
+    }
+    
+    if (alumno != null || maestro != null) {
+//        response.setStatus(response.SC_MOVED_TEMPORARILY);
+//        response.setHeader("Location", url); 
+        System.out.println("loggeado");
     }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

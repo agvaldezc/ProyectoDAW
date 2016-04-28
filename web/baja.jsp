@@ -14,25 +14,27 @@
             <title>JSP Page</title>
         </head>
         <body>
+        <jsp:include page="imports/header.jsp"></jsp:include>
             <script>
                 function borrar(obj, id, baja)
                 {
                     var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function () {
-                        if (xhttp.readyState == 4 && xhttp.status == 200) {
-                            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    xhttp.onload = function () {
+                        if  (xhttp.status == 200) {
+                            
                                 var ren = obj.parentNode.rowIndex;
                                 document.getElementById("tabla-bajas").deleteRow(ren);
-                            }
+                            
                         }
                     };
                     xhttp.open("GET", "BajaController?baja=" + baja + "&id=" + id, true);
                     xhttp.send();
                 }
             </script>
+            <div class="container">
             <h1>Bajas</h1>
             <div class="container">
-                <table class="table table-bordered" id="tabla-bajas">
+                <table class="table table-stripped" id="tabla-bajas">
                 <%
                     String baja = request.getParameter("baja");
                     String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
@@ -49,6 +51,7 @@
                         <th>Telefono</th>
                         <th>Mail</th>
                         <th>Cursos Impartidos</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,12 +71,8 @@
                     </tr>
                     <%
                         }
-                    } else {
+                    } 
                     %>
-                <p>!</p>
-                <%
-                    }
-                %>
 
                 <%if (baja.equals("materia")) {%>
                 <h3>Materias</h3>
@@ -81,6 +80,7 @@
                     <tr>
                         <th>Clave</th>
                         <th>Nombre</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,7 +99,6 @@
                             }
                         }
                     %>
-                    
                     <%if (baja.equals("salon")) {%>
                 <h3>Salones</h3>
                 <thead>
@@ -107,6 +106,7 @@
                         <th>Numero</th>
                         <th>Capacidad</th>
                         <th>Administracion</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -135,6 +135,7 @@
                         <th>Nombre</th>
                         <th>Telefono</th>
                         <th>Mail</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -166,6 +167,7 @@
                         <th>Salon</th>
                         <th>Ingles</th>
                         <th>Honors</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>

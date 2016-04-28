@@ -109,6 +109,8 @@ public class AuthenticationController extends HttpServlet {
             
             url = "/WEB-INF/menu.jsp";
                 
+            } else if (!session.isNew()){
+                url = "/WEB-INF/menu.jsp";
             } else {
                 error = "Usuario y/o contraseña inválido";
                 request.setAttribute("error", error);

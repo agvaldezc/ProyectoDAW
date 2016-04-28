@@ -73,6 +73,38 @@ public class BajaController extends HttpServlet {
             }
         }
         
+        if (baja.equals("alumno")) {
+            try {
+                String matricula = request.getParameter("matricula");
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                String query = "DELETE FROM Alumnos WHERE matricula = ?";
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, matricula);
+                pstmt.execute();
+                connection.close();
+            } catch (Exception e) {
+                System.err.println("Got an exception! ");
+                System.err.println(e.getMessage());
+            }
+        }
+        
+        if (baja.equals("curso")) {
+            try {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                String query = "DELETE FROM Cursos WHERE id = ?";
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                pstmt.setInt(1, id);
+                pstmt.execute();
+                connection.close();
+            } catch (Exception e) {
+                System.err.println("Got an exception! ");
+                System.err.println(e.getMessage());
+            }
+        }
+        
         ServletContext context = request.getServletContext();
         RequestDispatcher dispatcher = context.getRequestDispatcher(url);
         dispatcher.forward(request, response);

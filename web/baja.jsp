@@ -79,12 +79,69 @@
                     </tr>
                     <%
                         }
-                    } else {
-                    %>
-                <p>No hay datos!</p>
-                <%
                     }
-                %>
+                    %>
+                    
+                    <%if (baja.equals("alumno")) {%>
+                <thead>
+                    <tr>
+                        <th>Matricula</th>
+                        <th>Nombre</th>
+                        <th>Telefono</th>
+                        <th>Mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+
+                        String query = "SELECT * FROM Alumnos";
+                        ResultSet rs = stmt.executeQuery(query);
+                        while (rs.next()) {
+                    %>
+                    <tr>
+                        <td><%= rs.getString("matricula")%></td>
+                        <td><%= rs.getString("nombre")%></td>
+                        <td><%= rs.getString("telefono")%></td>
+                        <td><%= rs.getString("mail")%></td>
+                        <td><a href="BajaController?baja=alumno&matricula=<%=rs.getString("matricula")%>">Eliminar</a></td>
+                    </tr>
+                    <%
+                        }
+                    }
+                    %>
+                    
+                    <%if (baja.equals("curso")) {%>
+                <thead>
+                    <tr>
+                        <th>Clave Materia</th>
+                        <th>Grupo</th>
+                        <th>Horario</th>
+                        <th>Salon</th>
+                        <th>Ingles</th>
+                        <th>Honors</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+
+                        String query = "SELECT * FROM Cursos";
+                        ResultSet rs = stmt.executeQuery(query);
+                        while (rs.next()) {
+                    %>
+                    <tr>
+                        <td><%= rs.getString("claveMateria")%></td>
+                        <td><%= rs.getString("numeroGrupo")%></td>
+                        <td><%= rs.getString("horario")%></td>
+                        <td><%= rs.getString("salon")%></td>
+                        <td><%= rs.getInt("ingles")%></td>
+                        <td><%= rs.getInt("honors")%></td>
+                        <td><a href="BajaController?baja=curso&id=<%=rs.getString("id")%>">Eliminar</a></td>
+                    </tr>
+                    <%
+                        }
+                    }
+                    %>
+                
 
 
                 <%

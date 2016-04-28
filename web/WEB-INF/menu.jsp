@@ -40,27 +40,27 @@
             <%  if (esMaestro) {
                     out.print("<div class='list-group'>" +
                             "<h3>Altas</h3>" +
-                            "<a href='alta.jsp?alta=alumno' class='list-group-item'>Dar de alta un alumno en el sistema</a>" +
-                            "<a href='alta.jsp?alta=maestro' class='list-group-item'>Dar de alta un maestro en el sistema</a>" +
-                            "<a href='alta.jsp?alta=materia' class='list-group-item'>Dar de alta una materia en el sistema</a>" +
-                            "<a href='alta.jsp?alta=salon' class='list-group-item'>Dar de alta un salon en el sistema</a>" +
-                            "<a href='alta.jsp?alta=curso' class='list-group-item'>Dar de alta un curso en el sistema</a>" +
+                            "<a href='alta.jsp?alta=alumno' class='list-group-item'>Dar de alta un <b>alumno</b> en el sistema</a>" +
+                            "<a href='alta.jsp?alta=maestro' class='list-group-item'>Dar de alta un <b>maestro</b> en el sistema</a>" +
+                            "<a href='alta.jsp?alta=materia' class='list-group-item'>Dar de alta una <b>materia</b> en el sistema</a>" +
+                            "<a href='alta.jsp?alta=salon' class='list-group-item'>Dar de alta un <b>salon</b> en el sistema</a>" +
+                            "<a href='alta.jsp?alta=curso' class='list-group-item'>Dar de alta un <b>curso</b> en el sistema</a>" +
                         "</div>" +
                          "<div class='list-group'>" +
                             "<h3>Bajas</h3>" +
-                            "<a href='baja.jsp?baja=alumno' class='list-group-item'>Dar de baja un alumno en el sistema</a>" +
-                            "<a href='baja.jsp?baja=maestro' class='list-group-item'>Dar de baja un maestro en el sistema</a>" +
-                            "<a href='baja.jsp?baja=materia' class='list-group-item'>Dar de baja un materia en el sistema</a>" +
-                            "<a href='baja.jsp?baja=salon' class='list-group-item'>Dar de baja un salon en el sistema</a>" +
-                            "<a href='baja.jsp?baja=curso' class='list-group-item'>Dar de baja un curso en el sistema</a>" +
+                            "<a href='baja.jsp?baja=alumno' class='list-group-item'>Dar de baja un <b>alumno</b> en el sistema</a>" +
+                            "<a href='baja.jsp?baja=maestro' class='list-group-item'>Dar de baja un <b>maestro</b> en el sistema</a>" +
+                            "<a href='baja.jsp?baja=materia' class='list-group-item'>Dar de baja un <b>materia</b> en el sistema</a>" +
+                            "<a href='baja.jsp?baja=salon' class='list-group-item'>Dar de baja un <b>salon</b> en el sistema</a>" +
+                            "<a href='baja.jsp?baja=curso' class='list-group-item'>Dar de baja un <b>curso</b> en el sistema</a>" +
                         "</div>" +
                         "<div class='list-group'>" +
                             "<h3>Modificaciones</h3>" +
-                            "<a href='editar.jsp?editar=alumno' class='list-group-item'>Editar un alumno en el sistema</a>" +
-                            "<a href='editar.jsp?editar=maestro' class='list-group-item'>Editar un maestro en el sistema</a>" +
-                            "<a href='editar.jsp?editar=materia' class='list-group-item'>Editar una materia en el sistema</a>" +
-                            "<a href='editar.jsp?editar=salon' class='list-group-item'>Editar un salon en el sistema</a>" +
-                            "<a href='editar.jsp?editar=curso' class='list-group-item'>Editar un curso en el sistema</a>" +
+                            "<a href='editar.jsp?editar=alumno' class='list-group-item'>Editar un <b>alumno</b> en el sistema</a>" +
+                            "<a href='editar.jsp?editar=maestro' class='list-group-item'>Editar un <b>maestro</b> en el sistema</a>" +
+                            "<a href='editar.jsp?editar=materia' class='list-group-item'>Editar una <b>materia</b> en el sistema</a>" +
+                            "<a href='editar.jsp?editar=salon' class='list-group-item'>Editar un <b>salon</b> en el sistema</a>" +
+                            "<a href='editar.jsp?editar=curso' class='list-group-item'>Editar un <b>curso</b> en el sistema</a>" +
                         "</div>");
                 }
             

@@ -56,11 +56,11 @@
                         "</div>" +
                         "<div class='list-group'>" +
                             "<h3>Modificaciones</h3>" +
-                            "<a href='editar.jsp?editar=alumno' class='list-group-item'>Editar un <b>alumno</b> en el sistema</a>" +
-                            "<a href='editar.jsp?editar=maestro' class='list-group-item'>Editar un <b>maestro</b> en el sistema</a>" +
-                            "<a href='editar.jsp?editar=materia' class='list-group-item'>Editar una <b>materia</b> en el sistema</a>" +
-                            "<a href='editar.jsp?editar=salon' class='list-group-item'>Editar un <b>salon</b> en el sistema</a>" +
-                            "<a href='editar.jsp?editar=curso' class='list-group-item'>Editar un <b>curso</b> en el sistema</a>" +
+                            "<a href='modificar.jsp?modificar=alumno' class='list-group-item'>Editar un <b>alumno</b> en el sistema</a>" +
+                            "<a href='modificar.jsp?modificar=maestro' class='list-group-item'>Editar un <b>maestro</b> en el sistema</a>" +
+                            "<a href='modificar.jsp?modificar=materia' class='list-group-item'>Editar una <b>materia</b> en el sistema</a>" +
+                            "<a href='modificar.jsp?modificar=salon' class='list-group-item'>Editar un <b>salon</b> en el sistema</a>" +
+                            "<a href='modificar.jsp?modificar=curso' class='list-group-item'>Editar un <b>curso</b> en el sistema</a>" +
                         "</div>");
                 }
             

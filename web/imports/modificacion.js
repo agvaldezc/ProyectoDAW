@@ -76,8 +76,8 @@ function modificar(obj, tipo)
 	input.onblur = function salir()
 	{
 		salvarMod(obj, input.value);
-
-		guardarCambios(input.value, obj.id, obj.parentNode.id);
+                
+		guardarCambios(input.value, obj.id, obj.className, tipo);
 
 		delete input;
 	};
@@ -85,12 +85,14 @@ function modificar(obj, tipo)
 	//La tecla Enter
 	input.onkeydown = function keyDown(event)
 	{
-		if(event.keyCode == 13)
-        {
-			salvarMod(obj, input.value);
-                        guardarCambios(input.value, obj.id, obj.parentNode.id);
-			delete input;
-		}
+	    if(event.keyCode == 13)
+            {
+		salvarMod(obj, input.value);
+                
+                guardarCambios(input.value, obj.id, obj.className, tipo);
+                
+		delete input;
+            }
 	};
 }
 
@@ -98,122 +100,21 @@ function modificar(obj, tipo)
 //Salvando las modificaciones
 function salvarMod(obj, valor)
 {
-obj.replaceChild(document.createTextNode(valor), obj.firstChild);
-
+    obj.replaceChild(document.createTextNode(valor), obj.firstChild);
 }
 
-function guardarCambios(cambio, columna, registro) {
+function guardarCambios(cambio, columna, registro, tipo) {
 	var req = new XMLHttpRequest();
 
-	var url =  "guardarCambios.jsp?cambio=" + cambio + "&columna=" + columna + "&registro=" + registro;
-
-	req.open("GET",url , true);
-
-	req.send(null);
-
-}
-
-function agregarFila() {
-
-	var req = new XMLHttpRequest();
-
-	req.onload = function() { agregarFilaVista(req) };
-
-	req.open("GET", "agregarRegistro.php", true);
-
-	req.send(null);
-}
-
-function agregarFilaVista(req) {
-
-	if (req.status == 200) {
-		var tabla = document.getElementById("tabla-usuarios");
-
-		var tableRow = document.createElement("tr");
-		var nombre = document.createElement("td");
-		var apellido = document.createElement("td");
-		var direccion = document.createElement("td");
-		var codigo = document.createElement("td");
-		var ciudad = document.createElement("td");
-		var hijos = document.createElement("td");
-		var email = document.createElement("td");
-		var eliminar = document.createElement("td");
-		var eliminarBoton = document.createElement("input");
-
-		nombre.id = "nombre";
-		apellido.id = "apellido";
-		direccion.id = "direccion";
-		codigo.id = "codigo";
-		ciudad.id = "ciudad";
-		hijos.id = "hijos";
-		email.id = "email";
-		eliminar.id = "eliminar";
-
-		nombre.className = "celda";
-		apellido.className = "celda";
-		direccion.className = "celda";
-		codigo.className = "celda";
-		ciudad.className = "celda";
-		hijos.className = "celda";
-		email.className = "celda";
-		eliminar.className = "celda";
-
-		nombre.ondblclick = function() { modificar(this); };
-		apellido.ondblclick = function() { modificar(this); };
-		direccion.ondblclick = function() { modificar(this); };
-		codigo.ondblclick = function() { modificar(this); };
-		ciudad.ondblclick = function() { modificar(this); };
-		hijos.ondblclick = function() { modificar(this); };
-		email.ondblclick = function() { modificar(this); };
-
-		nombre.innerText = "nombre";
-		apellido.innerText = "apellido";
-		direccion.innerText = "direccion";
-		codigo.innerText = "codigo";
-		ciudad.innerText = "ciudad";
-		hijos.innerText = "hijos";
-		email.innerText = "email";
-
-
-		eliminarBoton.type = "button";
-		eliminarBoton.value = "Borrar fila";
-		eliminarBoton.onclick = function() { borrarRegistro(req.responseText); };
-
-		eliminar.appendChild(eliminarBoton);
-
-		tableRow.id = req.responseText;
-		tableRow.appendChild(nombre);
-		tableRow.appendChild(apellido);
-		tableRow.appendChild(direccion);
-		tableRow.appendChild(codigo);
-		tableRow.appendChild(ciudad);
-		tableRow.appendChild(hijos);
-		tableRow.appendChild(email);
-		tableRow.appendChild(eliminar);
-
-		tabla.appendChild(tableRow);
-	}
-}
-
-function borrarRegistro(id) {
-	var req = new XMLHttpRequest();
-
-	var url = "borrarRegistro.php?registro=" + id;
-
-	req.onload = function() { borrarRegistroVista(id, req) };
+	var url =  "ModificacionController?cambio=" + cambio + "&columna=" + columna + "&registro=" + registro + "&tipo=" + tipo;
+        
+        req.onload = function() { 
+            if (req.status == 200) {
+                alert("La modificacion se ha realizado con éxito.");
+            }
+        };
 
 	req.open("GET", url, true);
 
 	req.send(null);
-}
-
-function borrarRegistroVista(id, req) {
-
-	if (req.status == 200) {
-
-		var tableRow = document.getElementById(id);
-
-		tableRow.parentNode.removeChild(tableRow);
-
-	}
 }

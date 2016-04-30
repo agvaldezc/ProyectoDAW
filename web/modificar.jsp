@@ -1,3 +1,5 @@
+<%@page import="instancias.Alumno"%>
+<%@page import="instancias.Maestro"%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +15,7 @@
             <div class="container">
             <h1>Modificaciones</h1>
             <div class="container">
+                <h3 style="color: red">Para modificar la información indicada con (*), favor de dar doble click al campo.</h3>
                 <table class="table table-stripped" id="tabla-bajas">
                 <%
                     String modificacion = request.getParameter("modificar");
@@ -26,25 +29,25 @@
                 <thead>
                     <tr>
                         <th>Nomina</th>
-                        <th>Nombre</th>
-                        <th>Telefono</th>
-                        <th>Mail</th>
+                        <th>Nombre *</th>
+                        <th>Telefono *</th>
+                        <th>Mail *</th>
                         <th>Cursos Impartidos</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
+                        String query = "select * from Maestros";
 
-                        String query = "SELECT * FROM Maestros";
                         ResultSet rs = stmt.executeQuery(query);
                         while (rs.next()) {
                     %>
                     <tr>
-                        <td id="nomina" class="<%= rs.getString("nomina") %>" ondblclick='modificar(this, "maestro")'><%= rs.getString("nomina")%></td>
+                        <td id="nomina" class="<%= rs.getString("nomina") %>"><%= rs.getString("nomina")%></td>
                         <td id="nombre" class="<%= rs.getString("nomina") %>" ondblclick='modificar(this, "maestro")'><%= rs.getString("nombre")%></td>
                         <td id="telefono" class="<%= rs.getString("nomina") %>" ondblclick='modificar(this, "maestro")'><%= rs.getString("telefono")%></td>
                         <td id="mail" class="<%= rs.getString("nomina") %>" ondblclick='modificar(this, "maestro")'><%= rs.getString("mail")%></td>
-                        <td id="cursosImpartidos" class="<%= rs.getString("nomina") %>" ondblclick='modificar(this, "maestro")'><%= rs.getString("cursosImpartidos")%></td>
+                        <td id="cursosImpartidos" class="<%= rs.getString("nomina") %>"><%= rs.getString("cursosImpartidos")%></td>
                     </tr>
                     <%
                         }
@@ -55,8 +58,8 @@
                 <h3>Materias</h3>
                 <thead>
                     <tr>
-                        <th>Clave</th>
-                        <th>Nombre</th>
+                        <th>Clave *</th>
+                        <th>Nombre *</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,9 +81,9 @@
                 <h3>Salones</h3>
                 <thead>
                     <tr>
-                        <th>Numero</th>
-                        <th>Capacidad</th>
-                        <th>Administracion</th>
+                        <th>Numero *</th>
+                        <th>Capacidad *</th>
+                        <th>Administracion *</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,20 +108,21 @@
                 <thead>
                     <tr>
                         <th>Matricula</th>
-                        <th>Nombre</th>
-                        <th>Telefono</th>
-                        <th>Mail</th>
+                        <th>Nombre *</th>
+                        <th>Telefono *</th>
+                        <th>Mail *</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
 
                         String query = "SELECT * FROM Alumnos";
+                        
                         ResultSet rs = stmt.executeQuery(query);
                         while (rs.next()) {
                     %>
                     <tr>
-                        <td id="matricula" class="<%= rs.getString("matricula") %>" ondblclick='modificar(this, "alumno")'><%= rs.getString("matricula")%></td>
+                        <td id="matricula" class="<%= rs.getString("matricula") %>"><%= rs.getString("matricula")%></td>
                         <td id="nombre" class="<%= rs.getString("matricula") %>" ondblclick='modificar(this, "alumno")'><%= rs.getString("nombre")%></td>
                         <td id="telefono" class="<%= rs.getString("matricula") %>" ondblclick='modificar(this, "alumno")'><%= rs.getString("telefono")%></td>
                         <td id="mail" class="<%= rs.getString("matricula") %>" ondblclick='modificar(this, "alumno")'><%= rs.getString("mail")%></td>

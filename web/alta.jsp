@@ -10,6 +10,9 @@
     if (error == null) {
         error = "";
     }
+    
+    String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+    Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -95,10 +98,6 @@
                     <label for="mail">Mail </label>
                     <input type="text" id="maestroMail" name="mail" class="form-control" onkeyup="validar(this.value, this.id)" required>
                 </div>
-                <div class="form-group">
-                    <label for="cursos">Cursos impartidos </label>
-                    <input type="number" id="maestroCur" name="cursos" class="form-control" onkeyup="validar(this.value, this.id)" required>
-                </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
         </div>
@@ -179,8 +178,6 @@
                     <label for="materia">Clave de la materia</label>
                     <select name="materia" class="form-control" required>
                         <%
-                            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
-                            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
                             Statement stmt = connection.createStatement();
                             
                             String query = "SELECT * FROM Materias";
@@ -200,7 +197,21 @@
                 </div>
                 <div class="form-group">
                     <label for="horario">Horario </label>
-                    <input type="text" name="horario" class="form-control" required>
+                    <select name="horario" class="form-control" required>
+                    <%
+                            Statement stmt2 = connection.createStatement();
+                            
+                            String query2 = "SELECT * FROM Horarios";
+                            ResultSet rs2 = stmt.executeQuery(query2);
+                            
+                                while(rs2.next())
+                                {
+                        %>
+                        <option value="<%= rs2.getInt("id") %>"><%= rs2.getString("horario") %></option>
+                        <%
+                                }
+                        %>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="salon">Salon</label>

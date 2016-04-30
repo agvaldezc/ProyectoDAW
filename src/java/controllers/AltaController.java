@@ -94,9 +94,7 @@ public class AltaController extends HttpServlet {
             nombre = request.getParameter("nombre");
             telefono = request.getParameter("telefono");
             mail = request.getParameter("mail");
-            if (!request.getParameter("cursos").equals(null)) {
-                cursos = Integer.parseInt(request.getParameter("cursos"));
-            }
+
 
             if (nomina != "" && password != "" && nombre != "" && telefono != "" && mail != "") {
 

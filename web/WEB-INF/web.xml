@@ -12,6 +12,10 @@
         <servlet-name>BajaController</servlet-name>
         <servlet-class>controllers.BajaController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModificacionController</servlet-name>
+        <servlet-class>controllers.ModificacionController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationController</servlet-name>
         <url-pattern>/AuthenticationController</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>BajaController</servlet-name>
         <url-pattern>/BajaController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificacionController</servlet-name>
+        <url-pattern>/ModificacionController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

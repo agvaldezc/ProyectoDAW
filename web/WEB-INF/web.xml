@@ -28,6 +28,10 @@
         <servlet-name>ReporteController</servlet-name>
         <servlet-class>controllers.ReporteController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccionController</servlet-name>
+        <servlet-class>controllers.AccionController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationController</servlet-name>
         <url-pattern>/AuthenticationController</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>ReporteController</servlet-name>
         <url-pattern>/ReporteController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionController</servlet-name>
+        <url-pattern>/AccionController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -66,6 +66,10 @@
                 <a href='reportes.jsp?reporte=profesoresLibre' class='list-group-item'>Cursos que se imparten un determinado <b>día</b> en un determinado 
                     <b>salón</b></a>
             </div>
+            <div class='list-group'>
+                <h3>Acciones</h3>
+                <a href='acciones.jsp?accion=maestro' class='list-group-item'>Cursos impartidos por un <b>profesor</b></a>
+            </div>
             <% }%>
         </div>
     </body>

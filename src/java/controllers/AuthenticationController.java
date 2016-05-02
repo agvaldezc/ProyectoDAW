@@ -41,6 +41,7 @@ public class AuthenticationController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
@@ -52,67 +53,72 @@ public class AuthenticationController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        if (role.equals("maestro") && username != null && password != null) {
-            
-            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
-            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
-            
-            String queryString = "Select * from Maestros where nomina = ? and password = ?";
-            
-            PreparedStatement pstmt = connection.prepareStatement(queryString);
-            
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            
-            ResultSet result = pstmt.executeQuery();
-            
-            if (result.next()) {
-                
-                Maestro maestro = new Maestro(result.getString("nomina"), 
-                        result.getString("password"), result.getString("nombre"), result.getString("telefono"), 
-                        result.getString("mail"), result.getInt("cursosImpartidos"));
-                
-            session.setAttribute("maestro", maestro);
-            request.setAttribute("error", error);
-            session.setAttribute("role", role);
-            
-            url = "/WEB-INF/menu.jsp";
-                
-            } else {
-                error = "Usuario y/o contraseña inválido";
-                request.setAttribute("error", error);
+        if (role != null) {
+        
+            if (role.equals("maestro") && username != null && password != null) {
+
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+
+                String queryString = "Select * from Maestros where nomina = ? and password = ?";
+
+                PreparedStatement pstmt = connection.prepareStatement(queryString);
+
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+
+                ResultSet result = pstmt.executeQuery();
+
+                if (result.next()) {
+
+                    Maestro maestro = new Maestro(result.getString("nomina"),
+                            result.getString("password"), result.getString("nombre"), result.getString("telefono"),
+                            result.getString("mail"), result.getInt("cursosImpartidos"));
+
+                    session.setAttribute("maestro", maestro);
+                    request.setAttribute("error", error);
+                    session.setAttribute("role", role);
+
+                    url = "/menu.jsp";
+
+                } else {
+                    error = "Usuario y/o contraseña inválido";
+                    request.setAttribute("error", error);
+                }
+
+            } else if (role.equals("alumno") && username != null && password != null) {
+
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+
+                String queryString = "Select * from Alumnos where matricula = ? and password = ?";
+
+                PreparedStatement pstmt = connection.prepareStatement(queryString);
+
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+
+                ResultSet result = pstmt.executeQuery();
+
+                if (result.next()) {
+
+                    Alumno alumno = new Alumno(result.getString("matricula"),
+                            result.getString("password"), result.getString("nombre"), result.getString("telefono"),
+                            result.getString("mail"));
+
+                    session.setAttribute("alumno", alumno);
+                    request.setAttribute("error", error);
+                    session.setAttribute("role", role);
+
+                    url = "/menu.jsp";
+
+                } else {
+                    error = "Usuario y/o contraseña inválido";
+                    request.setAttribute("error", error);
+                }
             }
- 
-        } else if (role.equals("alumno") && username != null && password != null) {
-            
-            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
-            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
-            
-            String queryString = "Select * from Alumnos where matricula = ? and password = ?";
-            
-            PreparedStatement pstmt = connection.prepareStatement(queryString);
-            
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            
-            ResultSet result = pstmt.executeQuery();
-            
-            if (result.next()) {
-                 
-                Alumno alumno = new Alumno(result.getString("matricula"), 
-                        result.getString("password"), result.getString("nombre"), result.getString("telefono"), 
-                        result.getString("mail"));
-                
-            session.setAttribute("alumno", alumno);
-            request.setAttribute("error", error);
-            session.setAttribute("role", role);
-            
-            url = "/WEB-INF/menu.jsp";
-                
-            } else {
-                error = "Usuario y/o contraseña inválido";
-                request.setAttribute("error", error);
-            }
+        } else {
+            url = "/menu.jsp";
         }
         
         ServletContext context = request.getServletContext();

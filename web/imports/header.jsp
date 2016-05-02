@@ -8,7 +8,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <% if (request.getSession().getAttribute("maestro") == null && request.getSession().getAttribute("alumno") == null) {%>
+      <a class="navbar-brand" href="/ProyectoFinal/index.jsp">Inscripciones</a>
+      <%} else { %>
+      <a class="navbar-brand" href="/ProyectoFinal/menu.jsp">Inscripciones</a>
+      <% } %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

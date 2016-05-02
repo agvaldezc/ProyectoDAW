@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import instancias.Maestro;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -37,13 +38,15 @@ public class BajaController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        Maestro maestro = (Maestro) request.getSession().getAttribute("maestro");
 
-        String url = "/WEB-INF/menu.jsp";
+        String url = "/menu.jsp";
         String baja = request.getParameter("baja");
 
         if (baja.equals("maestro")) {
             try {
-                String nomina = request.getParameter("nomina");
+                String nomina = request.getParameter("id");
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
                 String query = "DELETE FROM Maestros WHERE nomina = ?";
@@ -57,9 +60,25 @@ public class BajaController extends HttpServlet {
             }
         }
         
+        if (baja.equals("alumno")) {
+            try {
+                String matricula = request.getParameter("id");
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                String query = "DELETE FROM Alumnos WHERE matricula = ?";
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, matricula);
+                pstmt.execute();
+                connection.close();
+            } catch (Exception e) {
+                System.err.println("Got an exception! ");
+                System.err.println(e.getMessage());
+            }
+        }
+        
         if (baja.equals("materia")) {
             try {
-                String clave = request.getParameter("clave");
+                String clave = request.getParameter("id");
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
                 String query = "DELETE FROM Materias WHERE clave = ?";
@@ -73,9 +92,56 @@ public class BajaController extends HttpServlet {
             }
         }
         
-        ServletContext context = request.getServletContext();
-        RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+        if (baja.equals("salon")) {
+            try {
+                String id = request.getParameter("id");
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                String query = "DELETE FROM Salones WHERE id = ?";
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                pstmt.setString(1, id);
+                pstmt.execute();
+                connection.close();
+            } catch (Exception e) {
+                System.err.println("Got an exception! ");
+                System.err.println(e.getMessage());
+            }
+        }
+        
+        if (baja.equals("curso")) {
+            try {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                String maestroCurso = "delete from MaestroCurso where idCurso = ? and nomina = ?";
+                PreparedStatement statement = connection.prepareStatement(maestroCurso);
+                
+                statement.setInt(1, id);
+                statement.setString(2, maestro.getNomina());
+                
+                statement.executeUpdate();
+                
+                PreparedStatement restarCursosImpartidos = connection.prepareStatement("update Maestros set cursosImpartidos = cursosImpartidos - 1 where nomina = ?");
+                
+                restarCursosImpartidos.setString(1, maestro.getNomina());
+                
+                restarCursosImpartidos.executeUpdate();
+                
+                String query = "DELETE FROM Cursos WHERE id = ?";
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                pstmt.setInt(1, id);
+                pstmt.execute();
+                connection.close();
+            } catch (Exception e) {
+                System.err.println("Got an exception! ");
+                System.err.println(e.getMessage());
+            }
+        }
+        
+        
+        //ServletContext context = request.getServletContext();
+        //RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+        //dispatcher.forward(request, response);
 
     }
 

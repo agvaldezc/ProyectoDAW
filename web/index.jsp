@@ -5,8 +5,12 @@
 --%>
 
 
+<%@page import="instancias.Alumno"%>
+<%@page import="instancias.Maestro"%>
 <% 
     String error = (String) request.getAttribute("error");
+    Maestro maestro = (Maestro) request.getSession().getAttribute("maestro");
+    Alumno alumno = (Alumno) request.getSession().getAttribute("alumno");
     
     if (error == null) {
         error = "";
@@ -29,21 +33,7 @@
                     out.println("</div>");
                 }
             %>
-            <div class="col-md-6">
-                <h1>Acceder al sistema como alumno</h1>
-                <form method="post" action="AuthenticationController?role=alumno" role="form">
-                    <div class="form-group">
-                        <label for="username">Usuario: </label>
-                        <input type="text" name="username" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña: </label>
-                        <input type="password" name="password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h1>Acceder al sistema como administrador</h1>
                 <form method="post" action="AuthenticationController?role=maestro" role="form">
                     <div class="form-group">

@@ -3,38 +3,44 @@
     Created on : Apr 22, 2016, 10:18:32 AM
     Author     : Gonzalez
 --%>
+<%@page import="java.sql.*"%>
 <%
     String error = (String) request.getAttribute("error");
 
     if (error == null) {
         error = "";
     }
+    
+    String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+    Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
 %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html"%>
 <!DOCTYPE html>
 <html>
     <head>
         <jsp:include page="imports/libraries.html"></jsp:include>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <script>
-            function validar(val, idInput) {
-                if (val.length < 1) {
-                    document.getElementById(idInput).parentElement.className += " has-error";
-                    return;
-                } else {
-                    document.getElementById(idInput).parentElement.className = "form-group has-success";
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>JSP Page</title>
+            <script>
+                function validar(val, idInput) {
+                    if (val.length < 1) {
+                        document.getElementById(idInput).parentElement.className += " has-error";
+                        return;
+                    } else {
+                        document.getElementById(idInput).parentElement.className = "form-group has-success";
+                    }
                 }
-            }
-        </script>
-    </head>
+            </script>
+        </head>
         <body>
         <jsp:include page="imports/header.jsp"></jsp:include>
+        <div class="container">
+
         <%
             String alta = request.getParameter("alta");
         %>
         <%if (alta.equals("salon")) {%>
-        <div class="col-md-6">
+            <div class="col-md-12">
             <%
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
@@ -62,7 +68,7 @@
         <%}%>
 
         <%if (alta.equals("maestro")) {%>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <%
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
@@ -77,7 +83,7 @@
                     <input type="text" id="maestroNom" name="nomina" class="form-control" onkeyup="validar(this.value, this.id)" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">ContraseÃ±a </label>
+                    <label for="password">Contraseña </label>
                     <input type="text" id="maestroPass" name="password" class="form-control" onkeyup="validar(this.value, this.id)" required>
                 </div>
                 <div class="form-group">
@@ -92,17 +98,13 @@
                     <label for="mail">Mail </label>
                     <input type="text" id="maestroMail" name="mail" class="form-control" onkeyup="validar(this.value, this.id)" required>
                 </div>
-                <div class="form-group">
-                    <label for="cursos">Cursos impartidos </label>
-                    <input type="number" id="maestroCur" name="cursos" class="form-control" onkeyup="validar(this.value, this.id)" required>
-                </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
         </div>
         <%}%>
-        
+
         <%if (alta.equals("materia")) {%>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <%
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
@@ -124,5 +126,127 @@
             </form>
         </div>
         <%}%>
+
+        <%if (alta.equals("alumno")) {%>
+        <div class="col-md-12">
+            <%
+                if (error != "") {
+                    out.println("<div class='alert alert-danger'>");
+                    out.println("<strong>" + error + "</strong>");
+                    out.println("</div>");
+                }
+            %>
+            <h1>Alta Alumno</h1>
+            <form method="post" action="AltaController?alta=alumno" role="form">
+                <div class="form-group">
+                    <label for="matricula">Matricula </label>
+                    <input type="text" id="alumnoNom" name="matricula" class="form-control" onkeyup="validar(this.value, this.id)" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña </label>
+                    <input type="text" id="alumnoNomPass" name="password" class="form-control" onkeyup="validar(this.value, this.id)" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre </label>
+                    <input type="text" id="alumnoNomNomb" name="nombre" class="form-control" onkeyup="validar(this.value, this.id)" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Telefono </label>
+                    <input type="text" id="alumnoNomTel" name="telefono" class="form-control" onkeyup="validar(this.value, this.id)" required>
+                </div>
+                <div class="form-group">
+                    <label for="mail">Mail </label>
+                    <input type="text" id="alumnoNomMail" name="mail" class="form-control" onkeyup="validar(this.value, this.id)" required>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+        <%}%>
+
+        <%if (alta.equals("curso")) {%>
+        <div class="col-md-12">
+            <%
+                if (error != "") {
+                    out.println("<div class='alert alert-danger'>");
+                    out.println("<strong>" + error + "</strong>");
+                    out.println("</div>");
+                }
+            %>
+            <h1>Alta Curso</h1>
+            <form method="post" action="AltaController?alta=curso" role="form">
+                <div class="form-group">
+                    <label for="materia">Clave de la materia</label>
+                    <select name="materia" class="form-control" required>
+                        <%
+                            Statement stmt = connection.createStatement();
+                            
+                            String query = "SELECT * FROM Materias";
+                            ResultSet rs = stmt.executeQuery(query);
+                                while(rs.next())
+                                {
+                        %>
+                        <option value="<%= rs.getString("clave") %>"> <%= rs.getString("clave") %> - <%= rs.getString("nombre") %> </option>
+                        <%
+                                }
+                        %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="grupo">Numero de grupo </label>
+                    <input type="number" name="grupo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="horario">Horario </label>
+                    <select name="horario" class="form-control" required>
+                    <%
+                            Statement stmt2 = connection.createStatement();
+                            
+                            String query2 = "SELECT * FROM Horarios";
+                            ResultSet rs2 = stmt.executeQuery(query2);
+                            
+                                while(rs2.next())
+                                {
+                        %>
+                        <option value="<%= rs2.getInt("id") %>"><%= rs2.getString("horario") %></option>
+                        <%
+                                }
+                        %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="salon">Salon</label>
+                    <select name="salon" class="form-control" required>
+                        <%
+                            
+                            query = "SELECT id FROM Salones";
+                            rs = stmt.executeQuery(query);
+                                while(rs.next())
+                                {
+                        %>
+                        <option value="<%= rs.getString("id") %>"><%= rs.getString("id") %></option>
+                        <%
+                                }
+                            stmt.close();
+                            connection.close();
+                        %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ingles">Curso en ingles?</label><br>
+                    <input type="radio" name="ingles" value="0" checked> No<br>
+                    <input type="radio" name="ingles" value="1"> Si<br>
+                </div>
+                <div class="form-group">
+                    <label for="honors">Grupo honors?</label><br>
+                    <input type="radio" name="honors" value="0" checked> No<br>
+                    <input type="radio" name="honors" value="1"> Si<br>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+        </div>
+        
+        <%}%>
+
     </body>
 </html>

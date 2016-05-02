@@ -21,10 +21,13 @@
 <html>
     <head>
         <jsp:include page="imports/libraries.html"></jsp:include>
+        <script src="imports/modificacion.js"></script>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <title>JSP Page</title>
         </head>
         <body>
+        <jsp:include page="imports/header.jsp"></jsp:include>
+        <div class="container">
 
         <%
             if (error != "") {
@@ -73,6 +76,6 @@
             </form>
         </div>
         <%}%>
-
+        </div>
     </body>
 </html>

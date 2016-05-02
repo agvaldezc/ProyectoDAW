@@ -77,7 +77,8 @@ public class ReporteController extends HttpServlet {
             ServletContext context = request.getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(url);
             dispatcher.forward(request, response);
-        } else if () {
+        } else if (reporte.equals("grupos")) {
+            
             
         } else if (reporte.equals("maestrosClase")) {
             

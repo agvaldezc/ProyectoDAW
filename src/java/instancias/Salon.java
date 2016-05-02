@@ -10,18 +10,28 @@ package instancias;
  * @author agvaldezc
  */
 public class Salon {
+    private String id;
     private int capacidad;
     private String administracion;
 
-    public Salon(int capacidad, String administracion) {
+    public Salon(String id, int capacidad, String administracion) {
+        this.id = id;
         this.capacidad = capacidad;
         this.administracion = administracion;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public int getCapacidad() {
         return capacidad;
     }
-
+    
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
     }

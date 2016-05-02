@@ -77,6 +77,8 @@ public class ReporteController extends HttpServlet {
             ServletContext context = request.getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(url);
             dispatcher.forward(request, response);
+        } else if () {
+            
         } else if (reporte.equals("maestrosClase")) {
             
             ArrayList<Maestro> maestros = new ArrayList<Maestro>();
@@ -144,9 +146,8 @@ public class ReporteController extends HttpServlet {
             ServletContext context = request.getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(url);
             dispatcher.forward(request, response);
-        }
-        
-        else if(reporte.equals("cursos")){
+            
+        } else if(reporte.equals("cursos")){
             try {
             String nom = request.getParameter("nomina");
             String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";

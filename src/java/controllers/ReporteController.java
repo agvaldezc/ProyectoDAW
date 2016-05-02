@@ -77,7 +77,10 @@ public class ReporteController extends HttpServlet {
             ServletContext context = request.getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(url);
             dispatcher.forward(request, response);
-        } else if (reporte.equals("profesoresClase")) {
+        } else if (reporte.equals("grupos")) {
+            
+            
+        } else if (reporte.equals("maestrosClase")) {
             
             ArrayList<Maestro> maestros = new ArrayList<Maestro>();
             
@@ -103,7 +106,7 @@ public class ReporteController extends HttpServlet {
                 maestros.add(salon);
             }
             
-            request.setAttribute("maestros", maestros);
+            request.setAttribute("maestrosClase", maestros);
             
             String url = "/reportes.jsp";
             
@@ -111,7 +114,7 @@ public class ReporteController extends HttpServlet {
             RequestDispatcher dispatcher = context.getRequestDispatcher(url);
             dispatcher.forward(request, response);
             
-        } else if (reporte.equals("profesoresLibre")) {
+        } else if (reporte.equals("maestrosLibre")) {
             
             ArrayList<Maestro> maestros = new ArrayList<Maestro>();
             
@@ -137,16 +140,15 @@ public class ReporteController extends HttpServlet {
                 maestros.add(salon);
             }
             
-            request.setAttribute("maestros", maestros);
+            request.setAttribute("maestrosLibre", maestros);
             
             String url = "/reportes.jsp";
             
             ServletContext context = request.getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(url);
             dispatcher.forward(request, response);
-        }
-        
-        else if(reporte.equals("cursos")){
+            
+        } else if(reporte.equals("cursos")){
             try {
             String nom = request.getParameter("nomina");
             String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";

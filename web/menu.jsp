@@ -61,8 +61,8 @@
                 <a href='reportes.jsp?reporte=cursos' class='list-group-item'>Cursos impartidos por un <b>profesor</b></a>
                 <a href='reportes.jsp?reporte=grupos' class='list-group-item'>Lista de grupos de una <b>materia</b></a>
                 <a href='reportes.jsp?reporte=salones' class='list-group-item'><b>Salones</b> disponibles en una hora especifica</a>
-                <a href='reportes.jsp?reporte=profesoresClase' class='list-group-item'>Profesores <b>con</b> clase en horario espec&iacute;fico</a>
-                <a href='reportes.jsp?reporte=profesoresLibre' class='list-group-item'>Profesores sin <b>clase</b> en horario espec&iacute;fico</a>
+                <a href='reportes.jsp?reporte=maestrosClase' class='list-group-item'>Profesores <b>con</b> clase en horario espec&iacute;fico</a>
+                <a href='reportes.jsp?reporte=maestrosLibre' class='list-group-item'>Profesores sin <b>clase</b> en horario espec&iacute;fico</a>
                 <a href='reportes.jsp?reporte=profesoresLibre' class='list-group-item'>Cursos que se imparten un determinado <b>día</b> en un determinado 
                     <b>salón</b></a>
             </div>

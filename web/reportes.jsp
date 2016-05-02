@@ -3,23 +3,30 @@
     Created on : May 1, 2016, 9:07:18 PM
     Author     : agvaldezc
 --%>
-<<<<<<< HEAD
+<%@page import="instancias.Maestro"%>
 <%@page import="java.sql.*"%>
-=======
-
 <%@page import="java.util.ArrayList"%>
 <%@page import="instancias.Salon"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
->>>>>>> development
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     ArrayList<Salon> salones = (ArrayList) request.getAttribute("salones");
+    ArrayList<Maestro> maestrosLibre = (ArrayList) request.getAttribute("maestrosLibre");
+    ArrayList<Maestro> maestrosClase = (ArrayList) request.getAttribute("maestrosClase");
     
     if (salones == null) {
         salones = new ArrayList<Salon>();
+    }
+    
+    if (maestrosLibre == null) {
+        maestrosLibre = new ArrayList<Maestro>();
+    }
+    
+    if (maestrosClase == null) {
+        maestrosClase = new ArrayList<Maestro>();
     }
 %>
 <!DOCTYPE html>
@@ -30,7 +37,6 @@
         </head>
         <body>
         <jsp:include page="imports/header.jsp"></jsp:include>
-<<<<<<< HEAD
             <script>
                 function desplegar(nom)
                 {
@@ -47,7 +53,7 @@
             <div class="container">
             <%
                 String reporte = request.getParameter("reporte");
-                if (reporte.equals("cursos")) {%>
+                if (reporte.equals("cursos")) { %>
             <h1>Cursos</h1>
             <div class="col-md-12">
                 <form method="post" role="form">
@@ -89,8 +95,9 @@
                     </tbody>
                 </table>
             </div>
-            <%}%>
-=======
+            <% } %>
+            
+        <% if (reporte.equals("salones"))  {%>
         <div class="container">
             <div class="col-md-12">
                 <form method="post" action="ReporteController?reporte=salones" role="form">
@@ -137,12 +144,131 @@
                             <td id="administracion"><%= salon.getAdministracion() %></td>
                         </tr>
                         <%
-                            }
+                                }
+                           
                         %>
                     </tbody>
                 </table>
             </div>
->>>>>>> development
+            <% } %>
+            
+            <% if (reporte.equals("maestrosClase"))  {%>
+            <div class="col-md-12">
+                <form method="post" action="ReporteController?reporte=maestrosClase" role="form">
+                <div class="form-group">
+                    <label for="nomina">Horario: </label>
+                    <select name="horario" class="form-control" required>
+            <%
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                
+                PreparedStatement statement = connection.prepareStatement("select * from Horarios");
+                
+                ResultSet result = statement.executeQuery();
+                
+                while (result.next()) {
+          
+            %>
+                    <option value="<%= result.getInt("id") %>"><%= result.getString("horario")%></option>
+            <%
+                }
+            %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Buscar" class="form-control"/>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-stripped" id="tabla-bajas">
+                    <thead>
+                        <tr>
+                            <th>Nomina</th>
+                            <th>Nombre</th>
+                            <th>Telefono</th>
+                            <th>Mail</th>
+                            <th>Cursos Impartidos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for (Maestro maestro : maestrosClase) {
+                        %>
+                        <tr>
+                            <td id="id"><%= maestro.getNomina() %></td>
+                            <td id="capacidad"><%= maestro.getNombre() %></td>
+                            <td id="administracion"><%= maestro.getTelefono() %></td>
+                            <td id="administracion"><%= maestro.getEmail() %></td>
+                            <td id="administracion"><%= maestro.getCursosImpartidos() %></td>
+                        </tr>
+                        <%
+                                }
+                           
+                        %>
+                    </tbody>
+                </table>
+            </div>
+                
+            <% } %>
+            
+            <% if (reporte.equals("maestrosLibre"))  {%>
+            <div class="col-md-12">
+                <form method="post" action="ReporteController?reporte=maestrosLibre" role="form">
+                <div class="form-group">
+                    <label for="nomina">Horario: </label>
+                    <select name="horario" class="form-control" required>
+            <%
+                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                
+                PreparedStatement statement = connection.prepareStatement("select * from Horarios");
+                
+                ResultSet result = statement.executeQuery();
+                
+                while (result.next()) {
+          
+            %>
+                    <option value="<%= result.getInt("id") %>"><%= result.getString("horario")%></option>
+            <%
+                }
+            %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Buscar" class="form-control"/>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-stripped" id="tabla-bajas">
+                    <thead>
+                        <tr>
+                            <th>Nomina</th>
+                            <th>Nombre</th>
+                            <th>Telefono</th>
+                            <th>Mail</th>
+                            <th>Cursos Impartidos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for (Maestro maestro : maestrosLibre) {
+                        %>
+                        <tr>
+                            <td id="id"><%= maestro.getNomina() %></td>
+                            <td id="capacidad"><%= maestro.getNombre() %></td>
+                            <td id="administracion"><%= maestro.getTelefono() %></td>
+                            <td id="administracion"><%= maestro.getEmail() %></td>
+                            <td id="administracion"><%= maestro.getCursosImpartidos() %></td>
+                        </tr>
+                        <%
+                                }
+                           
+                        %>
+                    </tbody>
+                </table>
+            </div>
+                
+            <% } %>
         </div>
     </body>
 </html>

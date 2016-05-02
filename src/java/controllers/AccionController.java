@@ -37,13 +37,16 @@ public class AccionController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "/reportes.jsp";
+        String url = "/reportes.jsp?reporte=cursos";
         String error = "";
+        
         try {
             String nomina = request.getParameter("maestro");
             String cursoId = request.getParameter("curso");
+            
             System.out.println(nomina);
             System.out.println(cursoId);
+            
             String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
             Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
             Statement stmt = connection.createStatement();

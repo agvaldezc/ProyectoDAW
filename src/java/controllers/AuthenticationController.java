@@ -46,7 +46,11 @@ public class AuthenticationController extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         //Se crea una sesión nueva al intentar iniciar sesión.
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
+        
+        if (session == null) {
+            session = request.getSession();
+        }
         
         //Inicializa la variable error y URL
         String error = "";
@@ -98,14 +102,20 @@ public class AuthenticationController extends HttpServlet {
                     //Se manda al menu principal si el proceso tuvo exito
                     url = "/menu.jsp";
 
+                
                 } else {
                     //Se crea el mensaje de error y se guarda en al request
                     error = "Usuario y/o contraseña inválido";
                     request.setAttribute("error", error);
                 }
-            } 
+            } else if (role.equals("logout")) {
+                    
+                    //Invalidar sesion
+                    session.invalidate();
+                    url = "/index.jsp";
+                    System.out.println(role);
+            }
         } else {
-            
             //Si ya existia sesion se redirige al menu
             url = "/menu.jsp";
         }

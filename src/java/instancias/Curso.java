@@ -10,31 +10,47 @@ package instancias;
  * @author agvaldezc
  */
 public class Curso {
-    private Materia materia;
-    private Salon salon;
+
+    private String materia;
+    private int grupo;
+    private String profesor;
+    private String horario;
+    private String salon;
     private boolean ingles;
     private boolean honors;
 
-    public Curso(Materia materia, Salon salon, boolean ingles, boolean honors) {
-        this.materia = materia;
-        this.salon = salon;
-        this.ingles = ingles;
-        this.honors = honors;
+    public Curso() {
     }
 
-    public Materia getMateria() {
+    public String getMateria() {
         return materia;
     }
 
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setMateria(String materiaId) {
+        this.materia = materiaId;
     }
 
-    public Salon getSalon() {
+    public int getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(int grupo) {
+        this.grupo = grupo;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public String getSalon() {
         return salon;
     }
 
-    public void setSalon(Salon salon) {
+    public void setSalon(String salon) {
         this.salon = salon;
     }
 
@@ -53,5 +69,12 @@ public class Curso {
     public void setHonors(boolean honors) {
         this.honors = honors;
     }
-    
+
+    public String getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(String profesor) {
+        this.profesor = profesor;
+    }
 }

@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import instancias.Curso;
 import instancias.Maestro;
 import instancias.Salon;
 import java.io.IOException;
@@ -51,8 +52,7 @@ public class ReporteController extends HttpServlet {
             ArrayList<Salon> salones = new ArrayList<Salon>();
             
             int horarioId = Integer.parseInt(request.getParameter("horario"));
-            System.out.println(horarioId);
-            
+
             String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
             Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
             
@@ -79,6 +79,44 @@ public class ReporteController extends HttpServlet {
             dispatcher.forward(request, response);
         } else if (reporte.equals("grupos")) {
             
+            ArrayList<Curso> cursos = new ArrayList<Curso>();
+            
+            String claveMateria = request.getParameter("materia");
+            
+            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+            
+            String query = "select * from Cursos join MaestroCurso on Cursos.id = MaestroCurso.idCurso "
+                    + "join Maestros on Maestros.nomina = MaestroCurso.nomina join Horarios on Cursos.horarioID = Horarios.id where "
+                    + "Cursos.claveMateria = ?";
+            
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setString(1, claveMateria);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while (result.next()) {
+                Curso curso = new Curso();
+                
+                curso.setMateria(claveMateria);
+                curso.setGrupo(result.getInt("numeroGrupo"));
+                curso.setProfesor(result.getString("nombre"));
+                curso.setHorario(result.getString("horario"));
+                curso.setSalon(result.getString("salon"));
+                curso.setIngles(result.getBoolean("ingles"));
+                curso.setHonors(result.getBoolean("honors"));
+ 
+                cursos.add(curso);
+            }
+            
+            request.setAttribute("cursos", cursos);
+            
+            String url = "/reportes.jsp";
+            
+            ServletContext context = request.getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+            dispatcher.forward(request, response);
             
         } else if (reporte.equals("maestrosClase")) {
             

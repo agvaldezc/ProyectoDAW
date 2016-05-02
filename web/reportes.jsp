@@ -3,6 +3,7 @@
     Created on : May 1, 2016, 9:07:18 PM
     Author     : agvaldezc
 --%>
+<%@page import="instancias.Curso"%>
 <%@page import="instancias.Maestro"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.sql.Statement"%>
@@ -17,7 +18,7 @@
     ArrayList<Salon> salones = (ArrayList) request.getAttribute("salones");
     ArrayList<Maestro> maestrosLibre = (ArrayList) request.getAttribute("maestrosLibre");
     ArrayList<Maestro> maestrosClase = (ArrayList) request.getAttribute("maestrosClase");
-    
+    ArrayList<Curso> cursos = (ArrayList) request.getAttribute("cursos");
 
     if (salones == null) {
         salones = new ArrayList<Salon>();
@@ -29,6 +30,10 @@
     
     if (maestrosClase == null) {
         maestrosClase = new ArrayList<Maestro>();
+    }
+    
+    if (cursos == null) {
+        cursos = new ArrayList<Curso>();
     }
 %>
 <!DOCTYPE html>
@@ -56,7 +61,7 @@
             <%
                 String reporte = request.getParameter("reporte");
                 if (reporte.equals("cursos")) { %>
-            <h1>Cursos</h1>
+            <h1>Cursos impartidos por un profesor</h1>
             <div class="col-md-12">
                 <form method="post" role="form">
                     <div class="form-group">
@@ -98,10 +103,75 @@
                 </table>
             </div>
             <% } %>
+            
+            <%
+                if (reporte.equals("grupos")) {%>
+            <div class="col-md-12">
+                 <h1>Grupos de una materia especifica</h1>
+                <form method="post" action="ReporteController?reporte=grupos" role="form">
+                    <div class="form-group">
+                        <label for="nomina">Horario: </label>
+                        <select name="materia" class="form-control" required>
+                            <%
+                                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+                                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+
+                                PreparedStatement statement = connection.prepareStatement("select * from Materias");
+
+                                ResultSet result = statement.executeQuery();
+
+                                while (result.next()) {
+
+                            %>
+                            <option value="<%= result.getString("clave")%>"><%= result.getString("clave")%> - <%= result.getString("nombre")%></option>
+                            <%
+                                }
+                            %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Buscar" class="form-control"/>
+                    </div>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-stripped" id="tabla-bajas">
+                    <thead>
+                        <tr>
+                            <th>Clave</th>
+                            <th>Grupo</th>
+                            <th>Profesor</th>
+                            <th>Horario</th>
+                            <th>Salon</th>
+                            <th>Ingles</th>
+                            <th>Honors</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for (Curso curso : cursos) {
+                        %>
+                        <tr>
+                            <td id="clave"><%= curso.getMateria() %></td>
+                            <td id="grupo"><%= curso.getGrupo() %></td>
+                            <td id="profesor"><%= curso.getProfesor() %></td>
+                            <td id="horario"><%= curso.getHorario() %></td>
+                            <td id="salon"><%= curso.getSalon() %></td>
+                            <td id="ingles"><% if (curso.isIngles()) out.println("Si"); else out.println("No"); %></td>
+                            <td id="honors"><% if (curso.isHonors()) out.println("Si"); else out.println("No"); %></td>
+                        </tr>
+                        <%
+                                }
+                           
+                        %>
+                    </tbody>
+                </table>
+            </div>
+            <% } %>
 
             <%
                 if (reporte.equals("salones")) {%>
             <div class="col-md-12">
+                 <h1>Salones disponibles a una hora especifica</h1>
                 <form method="post" action="ReporteController?reporte=salones" role="form">
                     <div class="form-group">
                         <label for="nomina">Horario: </label>
@@ -155,6 +225,7 @@
             <% } %>
             
             <% if (reporte.equals("maestrosClase"))  {%>
+             <h1>Profesores ocupados en un horario especifico</h1>
             <div class="col-md-12">
                 <form method="post" action="ReporteController?reporte=maestrosClase" role="form">
                 <div class="form-group">
@@ -214,6 +285,7 @@
             <% } %>
             
             <% if (reporte.equals("maestrosLibre"))  {%>
+             <h1>Profesores libres en un horario especifico</h1>
             <div class="col-md-12">
                 <form method="post" action="ReporteController?reporte=maestrosLibre" role="form">
                 <div class="form-group">

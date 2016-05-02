@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import instancias.Maestro;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -37,8 +38,10 @@ public class BajaController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        Maestro maestro = (Maestro) request.getSession().getAttribute("maestro");
 
-        String url = "/WEB-INF/menu.jsp";
+        String url = "/menu.jsp";
         String baja = request.getParameter("baja");
 
         if (baja.equals("maestro")) {
@@ -57,14 +60,14 @@ public class BajaController extends HttpServlet {
             }
         }
         
-        if (baja.equals("materia")) {
+        if (baja.equals("alumno")) {
             try {
-                String clave = request.getParameter("id");
+                String matricula = request.getParameter("id");
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
-                String query = "DELETE FROM Materias WHERE clave = ?";
+                String query = "DELETE FROM Alumnos WHERE matricula = ?";
                 PreparedStatement pstmt = connection.prepareStatement(query);
-                pstmt.setString(1, clave);
+                pstmt.setString(1, matricula);
                 pstmt.execute();
                 connection.close();
             } catch (Exception e) {
@@ -110,6 +113,20 @@ public class BajaController extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id"));
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+                String maestroCurso = "delete from MaestroCurso where idCurso = ? and nomina = ?";
+                PreparedStatement statement = connection.prepareStatement(maestroCurso);
+                
+                statement.setInt(1, id);
+                statement.setString(2, maestro.getNomina());
+                
+                statement.executeUpdate();
+                
+                PreparedStatement restarCursosImpartidos = connection.prepareStatement("update Maestros set cursosImpartidos = cursosImpartidos - 1 where nomina = ?");
+                
+                restarCursosImpartidos.setString(1, maestro.getNomina());
+                
+                restarCursosImpartidos.executeUpdate();
+                
                 String query = "DELETE FROM Cursos WHERE id = ?";
                 PreparedStatement pstmt = connection.prepareStatement(query);
                 pstmt.setInt(1, id);

@@ -29,11 +29,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../imports/libraries.html"></jsp:include>
+        <jsp:include page="imports/libraries.html"></jsp:include>
         <title>Menu</title>
     </head>
     <body>
-        <jsp:include page="../imports/header.jsp"></jsp:include>
+        <jsp:include page="imports/header.jsp"></jsp:include>
         <div class="container">
             <h1>Bienvenido/a <%= nombre %></h1>
             
@@ -58,9 +58,7 @@
                             "<h3>Modificaciones</h3>" +
                             "<a href='modificar.jsp?modificar=alumno' class='list-group-item'>Editar un <b>alumno</b> en el sistema</a>" +
                             "<a href='modificar.jsp?modificar=maestro' class='list-group-item'>Editar un <b>maestro</b> en el sistema</a>" +
-                            "<a href='modificar.jsp?modificar=materia' class='list-group-item'>Editar una <b>materia</b> en el sistema</a>" +
                             "<a href='modificar.jsp?modificar=salon' class='list-group-item'>Editar un <b>salon</b> en el sistema</a>" +
-                            "<a href='modificar.jsp?modificar=curso' class='list-group-item'>Editar un <b>curso</b> en el sistema</a>" +
                         "</div>");
                 }
             

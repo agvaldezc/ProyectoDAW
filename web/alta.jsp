@@ -14,7 +14,7 @@
     String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
     Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
 %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -83,7 +83,7 @@
                     <input type="text" id="maestroNom" name="nomina" class="form-control" onkeyup="validar(this.value, this.id)" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">ContraseÃ±a </label>
+                    <label for="password">Contraseña </label>
                     <input type="text" id="maestroPass" name="password" class="form-control" onkeyup="validar(this.value, this.id)" required>
                 </div>
                 <div class="form-group">
@@ -143,7 +143,7 @@
                     <input type="text" id="alumnoNom" name="matricula" class="form-control" onkeyup="validar(this.value, this.id)" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">ContraseÃ±a </label>
+                    <label for="password">Contraseña </label>
                     <input type="text" id="alumnoNomPass" name="password" class="form-control" onkeyup="validar(this.value, this.id)" required>
                 </div>
                 <div class="form-group">
@@ -193,7 +193,7 @@
                 </div>
                 <div class="form-group">
                     <label for="grupo">Numero de grupo </label>
-                    <input type="text" name="grupo" class="form-control" required>
+                    <input type="number" name="grupo" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="horario">Horario </label>

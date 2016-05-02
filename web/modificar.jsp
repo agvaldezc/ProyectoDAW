@@ -81,9 +81,9 @@
                 <h3>Salones</h3>
                 <thead>
                     <tr>
-                        <th>Numero *</th>
+                        <th>Numero</th>
                         <th>Capacidad *</th>
-                        <th>Administracion *</th>
+                        <th>Administracion</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -94,9 +94,9 @@
                         while (rs.next()) {
                     %>
                     <tr>
-                        <td id="id" class="<%= rs.getString("id") %>" ondblclick='modificar(this, "salon")'><%= rs.getString("id")%></td>
+                        <td id="id" class="<%= rs.getString("id") %>"><%= rs.getString("id")%></td>
                         <td id="capacidad" class="<%= rs.getString("id") %>" ondblclick='modificar(this, "salon")'><%= rs.getString("capacidad")%></td>
-                        <td id="administracion" class="<%= rs.getString("id") %>" ondblclick='modificar(this, "salon")'><%= rs.getString("administracion")%></td>
+                        <td id="administracion" class="<%= rs.getString("id") %>" ><%= rs.getString("administracion")%></td>
                     </tr>
                     <%
                             }
@@ -132,7 +132,7 @@
                         }
                     %>
 
-<!--                    <%if (modificacion.equals("curso")) {%>
+                    <%if (modificacion.equals("curso")) {%>
                     <h3>Cursos</h3>
                 <thead>
                     <tr>
@@ -152,9 +152,9 @@
                         while (rs.next()) {
                     %>
                     <tr>
-                        <td id="claveMateria" ondblclick='modificar(this, "curso")'><%= rs.getString("claveMateria")%></td>
+                        <td id="claveMateria" ><%= rs.getString("claveMateria")%></td>
                         <td id="numeroGrupo" ondblclick='modificar(this, "curso")'><%= rs.getString("numeroGrupo")%></td>
-                        <td id="horario" ondblclick='modificar(this, "curso")'><%= rs.getString("horario")%></td>
+                        <td id="horario" ><%= rs.getString("horario")%></td>
                         <td i="salon" ondblclick='modificar(this, "curso")'><%= rs.getString("salon")%></td>
                         <td id="ingles" ondblclick='modificar(this, "curso")'><%= rs.getInt("ingles")%></td>
                         <td id="honors" ondblclick='modificar(this, "curso")'><%= rs.getInt("honors")%></td>
@@ -162,15 +162,10 @@
                     <%
                             }
                         }
-                    %>
-
-
-
-                    <%
                         stmt.close();
                         connection.close();
                     %>
-                </tbody>-->
+                </tbody>
             </table>
         </div>
     </body>

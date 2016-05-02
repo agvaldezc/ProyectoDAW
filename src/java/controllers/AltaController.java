@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import instancias.Maestro;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -37,12 +38,14 @@ public class AltaController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         //HttpSession session = request.getSession();
+        Maestro maestro = (Maestro) request.getSession().getAttribute("maestro");
 
         String error = "";
-        String url = "/WEB-INF/menu.jsp";
+        String url = "/menu.jsp";
 
         String alta = request.getParameter("alta");
 
@@ -192,6 +195,7 @@ public class AltaController extends HttpServlet {
                     pstmt.execute();
 
                     connection.close();
+                    
                 } catch (Exception e) {
                     error = "Datos incorrectos";
                     request.setAttribute("error", error);
@@ -212,20 +216,44 @@ public class AltaController extends HttpServlet {
             String salon = "";
             int ingles = 0;
             int honors = 0;
+            
             materia = request.getParameter("materia");
             grupo = request.getParameter("grupo");
+            
             horario = Integer.parseInt(request.getParameter("horario"));
+            
             salon = request.getParameter("salon");
             ingles = Integer.parseInt(request.getParameter("ingles"));
             honors = Integer.parseInt(request.getParameter("honors"));
 
+            System.out.println("Materia: " + materia);
+            System.out.println("Grupo: " + grupo);
+            System.out.println("Horario: " + horario);
+            System.out.println("Salon: " + salon);
+            System.out.println("Inlges: " + ingles);
+            System.out.println("Honors: " + honors);
+            
             if (materia != "" && grupo != "" && salon != "") {
 
                 try {
+                    
                     String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                     Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
-
-                    String queryString = "INSERT INTO Cursos (claveMateria, numeroGrupo, horario, salon, ingles, honors) VALUES (?, ?, ?, ?, ?, ?)";
+                    
+                    String query = "select * from Cursos join MaestroCurso on Cursos.id = MaestroCurso.idCurso join Materias "
+                            + "on Materias.clave = Cursos.claveMateria join Horarios on Horarios.id = Cursos.horarioID where "
+                            + "nomina = ? and Cursos.horarioID = ?";
+        
+                    PreparedStatement statement = connection.prepareStatement(query);
+        
+                    statement.setString(1, maestro.getNomina());
+                    statement.setInt(2, horario);
+        
+                    ResultSet rs = statement.executeQuery();
+                    
+                    if (!rs.next()) {
+                    
+                    String queryString = "INSERT INTO Cursos (claveMateria, numeroGrupo, horarioID, salon, ingles, honors) VALUES (?, ?, ?, ?, ?, ?)";
 
                     PreparedStatement pstmt = connection.prepareStatement(queryString);
 
@@ -237,10 +265,49 @@ public class AltaController extends HttpServlet {
                     pstmt.setInt(6, honors);
 
                     pstmt.execute();
+                    
+                    String retreiveQuery = "select id from cursos where claveMateria = ? and numeroGrupo = ? and horarioID = ? and salon = ? and ingles = ? and honors = ?";
+                    
+                    PreparedStatement retreiveInsert = connection.prepareStatement(retreiveQuery);
+                    
+                    retreiveInsert.setString(1, materia);
+                    retreiveInsert.setString(2, grupo);
+                    retreiveInsert.setInt(3, horario);
+                    retreiveInsert.setString(4, salon);
+                    retreiveInsert.setInt(5, ingles);
+                    retreiveInsert.setInt(6, honors);
+                    
+                    ResultSet insert = retreiveInsert.executeQuery();
+                    
+                    insert.next();
+                    
+                    String maestroCursoInsert = "insert into MaestroCurso (nomina, idCurso, porcentaje) values (?, ?, 100)";
+                    
+                    PreparedStatement maestroCurso = connection.prepareStatement(maestroCursoInsert);
+                    
+                    maestroCurso.setString(1, maestro.getNomina());
+                    maestroCurso.setInt(2, insert.getInt("id"));
+                    
+                    maestroCurso.executeUpdate();
+                    
+                    PreparedStatement aumentarCursosImpartidos = connection.prepareStatement("update Maestros set cursosImpartidos = cursosImpartidos + 1 where nomina = ?");
+                    
+                    aumentarCursosImpartidos.setString(1, maestro.getNomina());
+                    
+                    aumentarCursosImpartidos.executeUpdate();
+                    
                     connection.close();
+                    
+                    } else {
+                        error = "El curso que quiere registrar se empalma con " + rs.getString("clave") + 
+                                rs.getString("nombre") + " en el horario " + rs.getString("horario") + ".\n Favor de cambiar el horario del curso"
+                                + " que se quiere registrar.";
+                        request.setAttribute("error", error);
+                        url = "/alta.jsp";
+                    }
 
                 } catch (Exception e) {
-                    error = "Datos incorrectos";
+                    error = e.getMessage();
                     request.setAttribute("error", error);
                     url = "/alta.jsp";
                 }

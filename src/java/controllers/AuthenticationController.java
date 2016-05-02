@@ -41,6 +41,7 @@ public class AuthenticationController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
@@ -78,7 +79,7 @@ public class AuthenticationController extends HttpServlet {
                     request.setAttribute("error", error);
                     session.setAttribute("role", role);
 
-                    url = "/WEB-INF/menu.jsp";
+                    url = "/menu.jsp";
 
                 } else {
                     error = "Usuario y/o contraseña inválido";
@@ -109,7 +110,7 @@ public class AuthenticationController extends HttpServlet {
                     request.setAttribute("error", error);
                     session.setAttribute("role", role);
 
-                    url = "/WEB-INF/menu.jsp";
+                    url = "/menu.jsp";
 
                 } else {
                     error = "Usuario y/o contraseña inválido";
@@ -117,7 +118,7 @@ public class AuthenticationController extends HttpServlet {
                 }
             }
         } else {
-            url = "/WEB-INF/menu.jsp";
+            url = "/menu.jsp";
         }
         
         ServletContext context = request.getServletContext();

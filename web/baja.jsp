@@ -3,7 +3,10 @@
     Created on : Apr 23, 2016, 5:50:54 PM
     Author     : Gonzalez
 --%>
-
+<%@page import="instancias.Maestro"%>
+<%
+    Maestro maestro = (Maestro) session.getAttribute("maestro");
+%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,9 +18,11 @@
         </head>
         <body>
         <jsp:include page="imports/header.jsp"></jsp:include>
-            <script>
+        <script>
                 function borrar(obj, id, baja)
                 {
+                    if (confirm("Esta seguro de que quiere borrar este registro?")) {
+                    
                     var xhttp = new XMLHttpRequest();
                     xhttp.onload = function () {
                         if  (xhttp.status == 200) {
@@ -27,8 +32,9 @@
                             
                         }
                     };
-                    xhttp.open("GET", "BajaController?baja=" + baja + "&id=" + id, true);
-                    xhttp.send();
+                        xhttp.open("GET", "BajaController?baja=" + baja + "&id=" + id, true);
+                        xhttp.send();
+                    }
                 }
             </script>
             <div class="container">
@@ -173,8 +179,13 @@
                 <tbody>
                     <%
 
-                        String query = "SELECT * FROM Cursos";
-                        ResultSet rs = stmt.executeQuery(query);
+                        String query = "SELECT * FROM Cursos join Horarios on Cursos.horarioID = Horarios.id join MaestroCurso on Cursos.id = MaestroCurso.idCurso where MaestroCurso.nomina = ?";
+                        
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        
+                        statement.setString(1, maestro.getNomina());
+                        
+                        ResultSet rs = statement.executeQuery();
                         while (rs.next()) {
                     %>
                     <tr>

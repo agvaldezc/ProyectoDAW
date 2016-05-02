@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import instancias.Maestro;
 import instancias.Salon;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,11 +66,7 @@ public class ReporteController extends HttpServlet {
             
             while (result.next()) {
                 Salon salon = new Salon(result.getString("id"), result.getInt("capacidad"), result.getString("administracion"));
-                
-                System.out.println(result.getString("id"));
-                System.out.println(result.getString("capacidad"));
-                System.out.println(result.getString("administracion"));
-                
+               
                 salones.add(salon);
             }
             
@@ -80,9 +77,76 @@ public class ReporteController extends HttpServlet {
             ServletContext context = request.getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher(url);
             dispatcher.forward(request, response);
+        } else if (reporte.equals("profesoresClase")) {
+            
+            ArrayList<Maestro> maestros = new ArrayList<Maestro>();
+            
+            int horarioId = Integer.parseInt(request.getParameter("horario"));
+            System.out.println(horarioId);
+            
+            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+            
+            String query = "select * from Maestros where Maestros.nomina in (select m.nomina from Maestros m, Cursos c, MaestroCurso mc where m.nomina = mc.nomina and mc.idCurso = c.id and c.horarioID = ?)";
+            
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setInt(1, horarioId);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while (result.next()) {
+                Maestro salon = new Maestro(result.getString("nomina"), result.getString("password"), 
+                        result.getString("nombre"), result.getString("telefono"), 
+                        result.getString("mail"), result.getInt("cursosImpartidos"));
+               
+                maestros.add(salon);
+            }
+            
+            request.setAttribute("maestros", maestros);
+            
+            String url = "/reportes.jsp";
+            
+            ServletContext context = request.getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+            dispatcher.forward(request, response);
+            
+        } else if (reporte.equals("profesoresLibre")) {
+            
+            ArrayList<Maestro> maestros = new ArrayList<Maestro>();
+            
+            int horarioId = Integer.parseInt(request.getParameter("horario"));
+            System.out.println(horarioId);
+            
+            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+            
+            String query = "select * from Maestros where Maestros.nomina not in (select m.nomina from Maestros m, Cursos c, MaestroCurso mc where m.nomina = mc.nomina and mc.idCurso = c.id and c.horarioID = ?)";
+            
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setInt(1, horarioId);
+            
+            ResultSet result = statement.executeQuery();
+            
+            while (result.next()) {
+                Maestro salon = new Maestro(result.getString("nomina"), result.getString("password"), 
+                        result.getString("nombre"), result.getString("telefono"), 
+                        result.getString("mail"), result.getInt("cursosImpartidos"));
+               
+                maestros.add(salon);
+            }
+            
+            request.setAttribute("maestros", maestros);
+            
+            String url = "/reportes.jsp";
+            
+            ServletContext context = request.getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+            dispatcher.forward(request, response);
         }
         
-        if(reporte.equals("cursos")){
+        else if(reporte.equals("cursos")){
             try {
             String nom = request.getParameter("nomina");
             String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";

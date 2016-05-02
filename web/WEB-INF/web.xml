@@ -20,6 +20,10 @@
         <servlet-name>InscripcionesController</servlet-name>
         <servlet-class>controllers.InscripcionesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReporteCursosController</servlet-name>
+        <servlet-class>controllers.ReporteCursosController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationController</servlet-name>
         <url-pattern>/AuthenticationController</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>InscripcionesController</servlet-name>
         <url-pattern>/InscripcionesController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReporteCursosController</servlet-name>
+        <url-pattern>/ReporteCursosController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

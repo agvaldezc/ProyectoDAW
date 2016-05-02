@@ -44,11 +44,16 @@ public class AuthenticationController extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        //Se crea una sesión nueva al intentar iniciar sesión.
         HttpSession session = request.getSession();
         
+        //Inicializa la variable error y URL
         String error = "";
         String url = "/index.jsp";
         
+        //Se obtiene el rol de la cuenta que se quiere ingresar y las
+        //  credenciales introducidas por el usuario
         String role = request.getParameter("role");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -56,71 +61,56 @@ public class AuthenticationController extends HttpServlet {
         if (role != null) {
         
             if (role.equals("maestro") && username != null && password != null) {
-
+                
+                
+                //Conexion con la base de datos
                 String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                 Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
 
+                //Query de validacion de credenciales
                 String queryString = "Select * from Maestros where nomina = ? and password = ?";
 
+                //Preparamos el query por cuestiones de seguridad---------
                 PreparedStatement pstmt = connection.prepareStatement(queryString);
 
                 pstmt.setString(1, username);
                 pstmt.setString(2, password);
+                //---------------------------------------------------------
 
+                //Se ejecuta el query y se obtiene un ResultSet si es que 
+                //  se ha tenido exito en el inicio de sesion
                 ResultSet result = pstmt.executeQuery();
 
                 if (result.next()) {
 
+                    //Se crea el objeto con la información del profesor
+                    // dentro de la sesión para poder ser utilizada en otros
+                    //      casos.
                     Maestro maestro = new Maestro(result.getString("nomina"),
                             result.getString("password"), result.getString("nombre"), result.getString("telefono"),
                             result.getString("mail"), result.getInt("cursosImpartidos"));
-
+                    
+                    //Se insertan los parametros dentro de la request
                     session.setAttribute("maestro", maestro);
                     request.setAttribute("error", error);
                     session.setAttribute("role", role);
-
+                    
+                    //Se manda al menu principal si el proceso tuvo exito
                     url = "/menu.jsp";
 
                 } else {
+                    //Se crea el mensaje de error y se guarda en al request
                     error = "Usuario y/o contraseña inválido";
                     request.setAttribute("error", error);
                 }
-
-            } else if (role.equals("alumno") && username != null && password != null) {
-
-                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
-                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
-
-                String queryString = "Select * from Alumnos where matricula = ? and password = ?";
-
-                PreparedStatement pstmt = connection.prepareStatement(queryString);
-
-                pstmt.setString(1, username);
-                pstmt.setString(2, password);
-
-                ResultSet result = pstmt.executeQuery();
-
-                if (result.next()) {
-
-                    Alumno alumno = new Alumno(result.getString("matricula"),
-                            result.getString("password"), result.getString("nombre"), result.getString("telefono"),
-                            result.getString("mail"));
-
-                    session.setAttribute("alumno", alumno);
-                    request.setAttribute("error", error);
-                    session.setAttribute("role", role);
-
-                    url = "/menu.jsp";
-
-                } else {
-                    error = "Usuario y/o contraseña inválido";
-                    request.setAttribute("error", error);
-                }
-            }
+            } 
         } else {
+            
+            //Si ya existia sesion se redirige al menu
             url = "/menu.jsp";
         }
         
+        //Se redirige hacia la pagina correspondiente
         ServletContext context = request.getServletContext();
         RequestDispatcher dispatcher = context.getRequestDispatcher(url);
         dispatcher.forward(request, response);

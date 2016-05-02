@@ -39,16 +39,21 @@ public class ModificacionController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
+        //Se obtiene la informacion del cambio que se realizara en la base
+        // de datos.
         String tipo = request.getParameter("tipo");
         String cambio = request.getParameter("cambio");
         String columna = request.getParameter("columna");
         String registro = request.getParameter("registro");
         
+        //Conexion con la base de datos
         String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
         Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
         
+        //Si es un maestro la modificacion
         if (tipo.equals("maestro")) {
             
+            //Preparacion del query por seguridad
             String query = "update Maestros set " + columna + " = ? where nomina = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
@@ -57,8 +62,10 @@ public class ModificacionController extends HttpServlet {
             
             statement.executeUpdate();
             
+        //Si es un alumno la modificacion  
         } else if (tipo.equals("alumno")) {
             
+            //Preparacion del query por seguridad
             String query = "update Alumnos set " + columna + " = ? where matricula = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             
@@ -67,8 +74,10 @@ public class ModificacionController extends HttpServlet {
             
             statement.executeUpdate();
             
+        //Si es un curso la modificacion 
         } else if (tipo.equals("curso")) {
             
+            //Preparacion del query por seguridad
             String query = "update Cursos set " + columna + " = ? where id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             
@@ -76,9 +85,11 @@ public class ModificacionController extends HttpServlet {
             statement.setString(2, registro);
             
             statement.executeUpdate();
-            
+        
+        //Si es un salon la modificacion
         } else if (tipo.equals("salon")) {
             
+            //Preparacion del query por seguridad
             String query = "update Salones set " + columna + " = ? where id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             
@@ -86,9 +97,11 @@ public class ModificacionController extends HttpServlet {
             statement.setString(2, registro);
             
             statement.executeUpdate();
-            
+        
+        //Si es una materia la modificacion
         } else if (tipo.equals("materia")) {
             
+            //Preparacion del query por seguridad
             String query = "update Materias set " + columna + " = ? where clave = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             

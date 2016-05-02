@@ -8,9 +8,11 @@
 <%@page import="instancias.Alumno"%>
 <%@page import="instancias.Maestro"%>
 <% 
+    //Creacion de string de error en caso de haberlo
     String error = (String) request.getAttribute("error");
+    
+    //Se obtiene el objeto correspondiente de la sesion
     Maestro maestro = (Maestro) request.getSession().getAttribute("maestro");
-    Alumno alumno = (Alumno) request.getSession().getAttribute("alumno");
     
     if (error == null) {
         error = "";
@@ -27,6 +29,7 @@
         <jsp:include page="imports/header.jsp"></jsp:include>
         <div class="container">
             <%
+                //Si no existe error, este div es omitido.
                 if (error != "") {
                     out.println("<div class='alert alert-danger'>");
                         out.println("<strong>" + error + "</strong>");

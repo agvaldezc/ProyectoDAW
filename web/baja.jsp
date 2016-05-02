@@ -21,8 +21,10 @@
         <script>
                 function borrar(obj, id, baja)
                 {
+                    //Confirmar que el registro se quiere eliminar
                     if (confirm("Esta seguro de que quiere borrar este registro?")) {
                     
+                    //Creacion y obtencion del objeto AJAX
                     var xhttp = new XMLHttpRequest();
                     xhttp.onload = function () {
                         if  (xhttp.status == 200) {
@@ -42,6 +44,7 @@
             <div class="container">
                 <table class="table table-stripped" id="tabla-bajas">
                 <%
+                    //Conexion con la base de datos
                     String baja = request.getParameter("baja");
                     String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
                     Connection connection = DriverManager.getConnection(connectionURL, "root", "root");

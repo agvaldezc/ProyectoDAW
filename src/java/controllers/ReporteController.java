@@ -82,6 +82,54 @@ public class ReporteController extends HttpServlet {
             dispatcher.forward(request, response);
         }
         
+        if(reporte.equals("cursos")){
+            try {
+            String nom = request.getParameter("nomina");
+            String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
+            Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
+            String queryString = "SELECT idCurso FROM MaestroCurso WHERE nomina = '"+nom+"'";
+            PreparedStatement pstmt = connection.prepareStatement(queryString);
+            ResultSet rs = pstmt.executeQuery(queryString);
+            if(!rs.next()){
+                out.println("El Maestro no tiene cursos");
+            }else
+                rs.beforeFirst();
+            while (rs.next()) {
+                queryString = "SELECT Horarios.horario, Cursos.claveMateria, Cursos.numeroGrupo, Cursos.salon, Cursos.ingles, Cursos.honors "
+                        + "FROM Cursos "
+                        + "INNER JOIN Horarios ON Cursos.horarioID=Horarios.id "
+                        + "WHERE Cursos.id = '"+rs.getString("idCurso")+"'";
+                PreparedStatement pstmt2 = connection.prepareStatement(queryString);
+                ResultSet rs2 = pstmt2.executeQuery(queryString);
+                if(!rs2.next()){
+                out.println("El Maestro no tiene cursos");
+            }else
+                rs2.beforeFirst();
+                while (rs2.next()) {
+                out.println("<tr>");
+                out.println("<td>"+rs2.getString("Cursos.claveMateria")+"</td>");
+                out.println("<td>"+rs2.getInt("Cursos.numeroGrupo")+"</td>");
+                out.println("<td>" + rs2.getString("Horarios.horario") + "</td>");
+                out.println("<td>" + rs2.getString("Cursos.salon") + "</td>");
+                if(rs2.getBoolean("Cursos.ingles")){
+                    out.println("<td>Si</td>");
+                }else
+                    out.println("<td>No</td>");
+                if(rs2.getBoolean("Cursos.honors"))
+                    out.println("<td>Honors</td>");
+                else
+                    out.println("<td>No</td>");
+                out.println("</tr>");
+                }
+            }
+
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

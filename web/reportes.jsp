@@ -3,13 +3,9 @@
     Created on : May 1, 2016, 9:07:18 PM
     Author     : agvaldezc
 --%>
-<<<<<<< HEAD
 <%@page import="instancias.Maestro"%>
 <%@page import="java.sql.*"%>
-=======
-
 <%@page import="java.sql.Statement"%>
->>>>>>> eb169c227fae6c8b47da2403f21c46437acf7bcc
 <%@page import="java.util.ArrayList"%>
 <%@page import="instancias.Salon"%>
 <%@page import="java.sql.ResultSet"%>
@@ -19,13 +15,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     ArrayList<Salon> salones = (ArrayList) request.getAttribute("salones");
-<<<<<<< HEAD
     ArrayList<Maestro> maestrosLibre = (ArrayList) request.getAttribute("maestrosLibre");
     ArrayList<Maestro> maestrosClase = (ArrayList) request.getAttribute("maestrosClase");
     
-=======
 
->>>>>>> eb169c227fae6c8b47da2403f21c46437acf7bcc
     if (salones == null) {
         salones = new ArrayList<Salon>();
     }
@@ -45,7 +38,6 @@
             <title>Menu</title>
         </head>
         <body>
-<<<<<<< HEAD
         <jsp:include page="imports/header.jsp"></jsp:include>
             <script>
                 function desplegar(nom)
@@ -106,30 +98,9 @@
                 </table>
             </div>
             <% } %>
-            
-        <% if (reporte.equals("salones"))  {%>
-        <div class="container">
-=======
-            <script>
-                function desplegar(nom)
-                {
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function () {
-                        if (xhttp.readyState == 4 && xhttp.status == 200) {
-                            document.getElementById("tabla-cursos-body").innerHTML = xhttp.responseText;
-                        }
-                    };
-                    xhttp.open("GET", "ReporteController?reporte=cursos&nomina=" + nom, true);
-                    xhttp.send();
-                }
-            </script>
-        <jsp:include page="imports/header.jsp"></jsp:include>
-            <div class="container">
 
             <%
-                String reporte = request.getParameter("reporte");
                 if (reporte.equals("salones")) {%>
->>>>>>> eb169c227fae6c8b47da2403f21c46437acf7bcc
             <div class="col-md-12">
                 <form method="post" action="ReporteController?reporte=salones" role="form">
                     <div class="form-group">
@@ -239,7 +210,6 @@
                     </tbody>
                 </table>
             </div>
-<<<<<<< HEAD
                 
             <% } %>
             
@@ -301,50 +271,6 @@
             </div>
                 
             <% } %>
-=======
-            <%}%>
-            <%if (reporte.equals("cursos")) {%>
-            <h1>Cursos</h1>
-            <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="maestro">Seleccionar Maestro </label>
-                        <select name="maestro" class="form-control" required onChange="desplegar(this.options[this.selectedIndex].value)">
-                            <option disabled selected>Selecciona el maestro</option>
-                            <%
-                                String connectionURL = "jdbc:mysql://localhost:3306/ProyectoDAW";
-                                Connection connection = DriverManager.getConnection(connectionURL, "root", "root");
-                                Statement stmt = connection.createStatement();
-
-                                String query = "SELECT * FROM Maestros";
-                                ResultSet rs = stmt.executeQuery(query);
-                                while (rs.next()) {
-                            %>
-                            <option value="<%= rs.getString("nomina")%>"> <%= rs.getString("nombre")%> - <%= rs.getString("nomina")%> </option>
-                            <%
-                                }
-                            %>
-                        </select>
-                    </div>
-            </div>
-            <div class="container">
-                <table class="table table-stripped" id="tabla-cursos">
-                    <thead>
-                        <tr>
-                            <th>Clave Materia</th>
-                            <th>Grupo</th>
-                            <th>Horario</th>
-                            <th>Salon</th>
-                            <th>Ingles</th>
-                            <th>honors</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-cursos-body">
-
-                    </tbody>
-                </table>
-            </div>
-            <%}%>
->>>>>>> eb169c227fae6c8b47da2403f21c46437acf7bcc
         </div>
     </body>
 </html>

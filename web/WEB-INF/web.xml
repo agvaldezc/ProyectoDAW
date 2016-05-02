@@ -21,13 +21,12 @@
         <servlet-class>controllers.InscripcionesController</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< HEAD
         <servlet-name>ReporteCursosController</servlet-name>
         <servlet-class>controllers.ReporteCursosController</servlet-class>
-=======
+    </servlet>
+    <servlet>
         <servlet-name>ReporteController</servlet-name>
         <servlet-class>controllers.ReporteController</servlet-class>
->>>>>>> development
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationController</servlet-name>
@@ -50,13 +49,12 @@
         <url-pattern>/InscripcionesController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
         <servlet-name>ReporteCursosController</servlet-name>
         <url-pattern>/ReporteCursosController</url-pattern>
-=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ReporteController</servlet-name>
         <url-pattern>/ReporteController</url-pattern>
->>>>>>> development
     </servlet-mapping>
     <session-config>
         <session-timeout>

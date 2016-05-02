@@ -157,7 +157,7 @@ CREATE TABLE `MaestroCurso` (
 
 LOCK TABLES `MaestroCurso` WRITE;
 /*!40000 ALTER TABLE `MaestroCurso` DISABLE KEYS */;
-INSERT INTO `MaestroCurso` VALUES ('L01234567',21,100),('L01234567',22,100),('L01234567',23,100),('L01234567',24,100);
+INSERT INTO `MaestroCurso` VALUES ('L01234567',23,100),('L01234567',24,100);
 /*!40000 ALTER TABLE `MaestroCurso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +187,7 @@ CREATE TABLE `Maestros` (
 
 LOCK TABLES `Maestros` WRITE;
 /*!40000 ALTER TABLE `Maestros` DISABLE KEYS */;
-INSERT INTO `Maestros` VALUES ('L01234567','admin','Raul Perez','8134567890','raul.perez@itesm.mx',0),('L01336955','admin','Alan Valdez','8116022437','alan@itesm.mx',0);
+INSERT INTO `Maestros` VALUES ('L01234567','admin','Raul Perez','8134567890','raul.perez@itesm.mx',2),('L01336955','admin','Alan Valdez','8116022437','alan@itesm.mx',0);
 /*!40000 ALTER TABLE `Maestros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,4 +286,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-01 23:45:06
+-- Dump completed on 2016-05-02  2:17:46
